@@ -1,0 +1,683 @@
+  @import './resetStyle.scss';
+  //====================================
+  @font-face {
+      font-family: 'Ubuntu Condensed';
+      src: url('../../fonts/UbuntuCondensed-Regular.ttf');
+  }
+  
+   ::-webkit-scrollbar {
+      width: 5px;
+  }
+  
+   ::-webkit-scrollbar-track {
+      background: #383636;
+      box-shadow: 0 0 2px rgba(0, 0, 0, .2) inset;
+  }
+  
+   ::-webkit-scrollbar-thumb {
+      background: #939393;
+      border-radius: 8px;
+      border: 3px solid #d4d4d4;
+  }
+  
+   ::-webkit-scrollbar-thumb:hover {
+      background: #7c7c7c;
+  }
+  
+  html,
+  body {
+      font-family: 'Ubuntu Condensed', sans-serif;
+  }
+  
+  .wrapper {
+      min-height: 100%;
+      background-color: rgb(159, 160, 160);
+      color: #fff;
+      overflow: hidden;
+      // position: relative;
+  }
+  
+  .phoneBook {
+      max-width: 920px;
+      background-color: rgb(236, 236, 205);
+      margin: 0 auto;
+      color: #000;
+      height: 680px;
+      position: relative;
+  }
+  
+  .phoneBook__row {
+      display: flex;
+      justify-content: space-between;
+  }
+  
+  // .phoneBook__column {
+  //   // border: 1px solid #fff;
+  // }
+  //Колонка с основным контентом
+  .phoneBook__body {
+      order: 2;
+      flex: 1 1 auto; // это строка только для мобильной версии, потом размер будет зада другой
+      height: 667px;
+  }
+  
+  .body__header {
+      display: flex;
+      justify-content: space-between;
+      margin: 15px 0 0 0;
+  }
+  
+  // .header__column {
+  //   // border: 1px solid red;
+  // }
+  .header__img {
+      text-align: left;
+      font-size: 30px;
+  }
+  
+  .header__img_groupName {
+      font-weight: 600;
+      display: none;
+      vertical-align: sub;
+  }
+  
+  .header__search {
+      flex: 1 1 auto; // делаем стркоу поиска на всю длину flex блока
+      text-align: right;
+  }
+  
+  .search__string {
+      height: 50px;
+      width: 30px; // такой размер только при мобильной версии, вообще по идее он будет изначально 0 и только после клика на него оно расшириться
+      font-size: 20px;
+      border-radius: 5px;
+      margin: 0 10px 0 15px;
+      background: url('../../img/search.png') 100% 12px no-repeat;
+      // box-shadow: 2px 2px 2px #000;
+      // transition: all .5s;
+      cursor: pointer;
+  }
+  
+  .search__string:focus {
+      width: 90%;
+      box-shadow: 1px 1px 1px #bbb;
+      border: 1px solid #bbb;
+      background: transparent;
+      cursor: default;
+      transition: all .5s;
+  }
+  
+  .header__menu {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  
+  .body__cards {
+      padding: 20px;
+      font-size: 16px;
+      line-height: 24px;
+      margin: 30px 0 0 0;
+      height: 550px;
+      overflow: auto;
+  }
+  
+  .cards__card {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #ccc;
+      margin: 15px 0 0 0;
+  }
+  
+  .card__col {
+      // border: 1px solid red;
+      margin: 0 20px 0 0;
+  }
+  
+  .card__img {
+      background: url('../../img/u-logo.png') 50%/100% no-repeat;
+      border-radius: 50%;
+      box-shadow: -2px 0 5px #bbb;
+      border: 3px solid #bbb;
+      flex: 0 0 70px;
+      height: 70px;
+  }
+  
+  .card__info {
+      font-style: italic;
+      flex: 1 1 auto;
+  }
+  
+  .card__number {
+      margin: 0;
+  }
+  
+  // Колонка с группами
+  .phoneBook__groups {
+      display: none;
+      background-color: rgb(56, 54, 54);
+      color: #fff;
+      order: 1;
+      // flex: 0 0 200px; // задается в keyframes
+  }
+  
+  .groups__row {
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      &:last-child {
+          margin: 0;
+      }
+  }
+  
+  // .groups__column {
+  //     border: 1px solid red;
+  // }
+  .groups__newGroup {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      margin: 15px 0 30px 0;
+      background: url('../../img/addGroup.png') 50%no-repeat;
+      border-radius: 50%;
+      border: 2px solid #bbb;
+      align-self: center;
+      flex: 0 0 50px;
+      width: 50px;
+  }
+  
+  .groups__listGroup {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      margin: 0 0 40px 0;
+      width: 185px;
+      height: 500px;
+      flex: 1 1 auto;
+      align-self: center;
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+      color: #bbb;
+      font-weight: 600;
+      overflow-y: auto;
+      overflow-x: hidden;
+      li {
+          position: relative;
+      }
+      li:hover {
+          color: #fff
+      }
+      li:active {
+          color: #fff
+      }
+      .inp_new_group {
+          background-color: rgba(56, 54, 54, 0);
+          color: #bbb;
+          text-align: center;
+          font-size: 16px;
+      }
+      .inp_new_group:focus {
+          border: 1px solid #bbb;
+      }
+      .active_list_el {
+          color: #fff;
+      }
+      .groups__controls_wrapper {
+          display: inline-block;
+          position: absolute;
+          left: 200px;
+      }
+      .groups__edit_controls {
+          position: absolute;
+          display: flex;
+          justify-content: space-between;
+      }
+      .groups__controls_wrapper_show {
+          // display: initial;
+          opacity: 1;
+      }
+      .groups__controls_wrapper_hide {
+          // display: none;
+          opacity: 0;
+      }
+      .rename_group,
+      .delete_group {
+          cursor: pointer;
+          -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+          width: 30px;
+          height: 30px;
+      }
+      .rename_group {
+          background: url('../../img/rename-group.png') 50%no-repeat;
+      }
+      .delete_group {
+          background: url('../../img/delete-group.png') 50%no-repeat;
+      }
+  }
+  
+  // =========
+  .groups__setting {
+      // background: url('../../img/addGroup.png') 50%no-repeat;
+      // border-radius: 50%;
+      align-self: center;
+      text-align: center;
+      flex: 0 0 auto;
+      margin: 0 0 10px 0;
+      // width: 100px;
+  }
+  
+  // .setting_column {
+  //   // border: 1px solid red;
+  // }
+  .setting__img {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      display: inline-block;
+      background: url('../../img/settings24_1.png') 50%no-repeat;
+      width: 30px;
+      height: 30px;
+  }
+  
+  .edit__img {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      display: inline-block;
+      background: url('../../img/edit-group.png') 50%no-repeat;
+      width: 30px;
+      height: 30px;
+  }
+  
+  .edit__stop__img {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      background: url('../../img/stop-edit.png') 50%no-repeat;
+      width: 30px;
+      height: 30px;
+      display: none;
+  }
+  
+  //Колонка сописанием по карточке
+  .phoneBook__description {
+      display: none;
+      background-color: rgb(56, 54, 54);
+      order: 3;
+      // flex: 0 0 200px; //задается в keyframes
+  }
+  
+  .description__row {
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+  }
+  
+  // .description__column {
+  //   // border: 1px solid red;
+  // }
+  .description__username {
+      margin: 15px 0 30px 0;
+      padding: 0 0 0 15px;
+      flex: 0 0 auto;
+      color: #bbb;
+      font-size: 30px;
+      font-weight: 600;
+  }
+  
+  .description__userphoto {
+      margin: 0 0 30px 0;
+      background: url('../../img/u-logo.png') 50%/100% no-repeat;
+      // box-shadow: -2px 0 5px #bbb;
+      border: 5px solid #bbb;
+      flex: 0 0 150px;
+      border-radius: 50%;
+      width: 150px;
+      align-self: center;
+  }
+  
+  .description__userinfo {
+      // border: 1px solid red;
+      margin: 0 0 5px 0;
+      color: #bbb;
+      height: 200px;
+      padding: 0 0 0 15px;
+      overflow-y: auto;
+      line-height: 30px;
+      font-size: 20px;
+      flex: 1 1 auto;
+  }
+  
+  .false_field {
+      background-color: rgba(56, 54, 54, 0);
+      color: #bbb;
+      text-align: left;
+      font-size: 16px;
+      padding: 0 0 0 10px;
+      height: 25px;
+      width: 160px;
+      margin-bottom: 5px;
+      border: 1px solid #bbb;
+  }
+  
+  .false_field:focus {
+      border: 1px solid #fff;
+  }
+  
+  .false_field_ok_btn,
+  .false_field_cancel_btn {
+      border: 2px solid #bbb;
+      border-radius: 50%;
+      margin: 10px 10px 0 5px;
+      height: 30px;
+      width: 30px;
+      align-self: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+  
+  .false_field_ok_btn {
+      display: inline-block;
+      background: url('../../img/checkmark24.svg') 50% no-repeat;
+  }
+  
+  .false_field_cancel_btn {
+      margin: 0;
+      display: inline-block;
+      background: url('../../img/cancel-24.svg') 50% no-repeat;
+  }
+  
+  .description__setting {
+      // border: 1px solid green;
+      // background: url('../../img/addGroup.png') 50%no-repeat;
+      // border-radius: 50%;
+      align-self: center;
+      text-align: center;
+      flex: 0 0 auto;
+      margin: 0 0 10px 0;
+      // width: 100px;
+  }
+  
+  .false__field__wrapper {
+      // border: 1px solid yellow;
+      height: 100px;
+      padding: 0 0 0 15px;
+      margin: 0 0 25px 0;
+  }
+  
+  .description__newphone {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      margin: 0 15px 0 0;
+      background: url('../../img/new-phone.png') 50%no-repeat;
+      border-radius: 50%;
+      // flex: 0 0 50px;
+      // flex: 0 0 auto;
+      // width: 50px;
+      display: inline-block;
+      // background: url('../../img/info16.png') 50%no-repeat;
+      width: 50px;
+      height: 50px;
+  }
+  
+  .description__editcard {
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      // margin: 0 0 10px 0;
+      background: url('../../img/edit-card.svg') 50%no-repeat;
+      border-radius: 50%;
+      // align-self: center;
+      // flex: 0 0 auto;
+      display: inline-block;
+      // background: url('../../img/info16.png') 50%no-repeat;
+      width: 50px;
+      height: 50px;
+  }
+  
+  // стили модального окна
+  @import './modal.style.scss';
+  .appear {
+      animation: appear 1s 0s 1 forwards;
+  }
+  
+  .disappear {
+      animation: disappear .5s 0s 1 forwards;
+  }
+  
+  // 
+  @keyframes appear {
+      0% {
+          opacity: 0;
+      }
+      100% {
+          opacity: 1;
+      }
+  }
+  
+  @keyframes disappear {
+      0% {
+          opacity: 1;
+      }
+      100% {
+          opacity: 0;
+      }
+  }
+  
+  @keyframes swim-out {
+      0% {
+          width: 0;
+      }
+      // 50% {
+      //   width: 100px;
+      // }
+      100% {
+          flex: 0 0 200px;
+          width: 200px;
+      }
+  }
+  
+  @keyframes hide {
+      0% {
+          width: 200px;
+      }
+      // 50% {
+      //   width: 100px;
+      // }
+      100% {
+          width: 0;
+      }
+  }
+  
+  //===============================
+  @keyframes increaseWidth {
+      0% {
+          width: 200px;
+      }
+      // 50% {
+      //   width: 100px;
+      // }
+      100% {
+          width: 280px;
+      }
+  }
+  
+  @keyframes decreaseWidth {
+      0% {
+          width: 280px;
+      }
+      // 50% {
+      //   width: 100px;
+      // }
+      100% {
+          width: 200px;
+      }
+  }
+  
+  @keyframes upWidth {
+      0% {
+          width: 185px;
+      }
+      // 50% {
+      //   width: 100px;
+      // }
+      100% {
+          width: 270px;
+      }
+  }
+  
+  @keyframes downWidth {
+      0% {
+          width: 270px;
+      }
+      // 50% {
+      //   width: 100px;
+      // }
+      100% {
+          width: 185px;
+      }
+  }
+  
+  //===============================
+  // Медиа запросы для адаптива
+  @media (min-width: 425px) {
+      .header__img {
+          &_groupName {
+              display: inline-block;
+          }
+          min-width: 200px;
+      }
+  }
+  
+  //   @media (min-width: 576px) {
+  // }
+  @media (min-width: 768px) {
+      .header__menu img {
+          display: none;
+      }
+      .phoneBook {
+          margin: 10px 10px 0 10px;
+          border-radius: 15px;
+          height: 680px;
+      }
+      .phoneBook__groups {
+          position: relative;
+          display: block;
+          height: 680px;
+          border-radius: 15px 0 0 15px;
+          animation-name: swim-out;
+          animation-iteration-count: 1;
+          animation-duration: .3s;
+          animation-fill-mode: forwards;
+          .groups__row {
+              animation-name: appear;
+              animation-iteration-count: 1;
+              animation-duration: 1s;
+              animation-delay: .2s;
+              animation-fill-mode: forwards;
+          }
+      }
+      .phoneBook__description {
+          display: block;
+          height: 680px;
+          border-radius: 0 15px 15px 0;
+          animation-name: swim-out;
+          animation-iteration-count: 1;
+          animation-duration: .3s;
+          animation-fill-mode: forwards;
+          .description__row {
+              animation-name: appear;
+              animation-iteration-count: 1;
+              animation-duration: 1s;
+              animation-delay: .2s;
+              animation-fill-mode: forwards;
+          }
+      }
+      // animation
+      .increaseWidth {
+          animation-name: increaseWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          // animation-delay: .2s;
+          animation-fill-mode: forwards;
+      }
+      .decreaseWidth {
+          animation-name: decreaseWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          animation-fill-mode: forwards;
+      }
+      .upWidth {
+          animation-name: upWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          // animation-delay: .2s;
+          animation-fill-mode: forwards;
+      }
+      .downWidth {
+          animation-name: downWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          animation-fill-mode: forwards;
+      }
+  }
+  
+  @media (min-width: 992px) {
+      .phoneBook {
+          margin: 0 auto;
+          margin-top: 50px;
+      }
+  }
+  
+  // @media (min-width: 1200px) {
+  //   .hi,
+  //   .content {
+  //     max-width: 1140px;
+  //   }
+  // }
+  @media (max-width: 767px) {
+      .show {
+          display: block;
+          position: absolute;
+          height: 681px;
+          width: 200px;
+          animation: swim-out .3s 1 forwards;
+          .groups__row,
+          .description__row {
+              animation: appear 1s .2s 1 forwards;
+          }
+      }
+      .hide {
+          animation: hide .3s 1 forwards;
+          .groups__row,
+          .description__row {
+              animation: disappear .2s 1 forwards;
+          }
+      }
+      // animation
+      .increaseWidth {
+          animation-name: increaseWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          // animation-delay: .2s;
+          animation-fill-mode: forwards;
+      }
+      .decreaseWidth {
+          animation-name: decreaseWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          animation-fill-mode: forwards;
+      }
+      .upWidth {
+          animation-name: upWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          // animation-delay: .2s;
+          animation-fill-mode: forwards;
+      }
+      .downWidth {
+          animation-name: downWidth;
+          animation-iteration-count: 1;
+          animation-duration: .5s;
+          animation-fill-mode: forwards;
+      }
+  }

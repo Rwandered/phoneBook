@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <title>Phone Book</title>
+</head>
+
+<body>
+  <!-- Просто обертка чтобы задат размер всего окна -->
+  <div class="wrapper">
+    <!-- основная обретка окна - тут будут все элементы -->
+    <div class="phoneBook">
+      <!-- элемент, который будет flex контейнером тут будут все 3 колонки-->
+      <div class="phoneBook__row">
+        <!-- Основная колонка в центре - идет в мобайл ферст -->
+        <div class="phoneBook__column phoneBook__body body">
+          <!-- Блок заголовка колонки где будут 
+ кнопка меню, иконка группы и ее имя и строка поиска,
+которая будет выдвигаться при нажатии на кнопку поиска
+это будет flex контейнер -->
+          <div class="body__header header">
+            <!-- первый flex элемент с иконкой группы и ее именем -->
+            <div class="header__column header__img">
+              <img src="groupLogo.png" alt="gpL">
+              <p class="header__img_groupName" data-gpName>You phone book</p>
+            </div>
+            <!-- второй flex элемент со строкой поиска
+   и ее кнопкой показа -->
+            <div class=" header__column header__search">
+              <input class="search__string" type="text">
+            </div>
+            <!-- третий flex элемент с иконкой меню -->
+            <div class="header__column header__menu" data-menu>
+              <img src="menu.png" alt="Menu">
+            </div>
+          </div>
+          <!-- Блок основновного контента данной колонки.
+Тут будут находиться карточки, при чем каждая 
+карточка это flex контейнер -->
+          <div class="body__cards cards">
+
+            <!-- ТУТ БЫЛА КАРТОЧКА -->
+
+          </div>
+        </div>
+
+
+        <!-- ТУТ БЫЛА ЛЕВАЯ КОЛОНКА -->
+
+
+        <!-- ТУТ БЫЛА ПРАВАЯ КОЛОНКА -->
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+.modal__layer {
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 999;
+    // border: 5px solid green;
+    background-color: rgba(56, 54, 54, .5);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.modal__window {
+    margin: 0 auto;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    background-color: rgb(56, 54, 54);
+    width: 300px;
+    /* width: 400px; */
+    height: 680px;
+    /* height: 350px; */
+    color: #bbb;
+    // position: fixed;
+    z-index: 1000;
+}
+
+.modal__row {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid yellow; */
+    /* align-self: center; */
+}
+
+.modal__column {
+    /* border: 1px solid red; */
+    margin: 0 15px 0 15px;
+}
+
+
+/* ===============Header */
+
+.modal__header {
+    font-weight: 600;
+    font-size: 20px;
+    margin: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal__close {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+/* ===============Header end */
+
+
+/* =================Body */
+
+.modal__body {
+    /* flex: 1 0 100px; */
+    /* height: 450px;   */
+    /* border: 1px solid pink; */
+}
+
+.body__row {
+    /* display: flex;
+ border: 2px solid green; */
+    /* width: 350px; */
+}
+
+
+/* ============================================ */
+
+.form__flex__row {
+    display: flex; // эти стили будет в media
+    flex-direction: column;
+}
+
+.form__column {
+    margin: 20px 10px 10px 10px;
+    // border: 1px solid red;
+}
+
+.form__logo {
+    flex: 1 1 150px; // эти стили будет в media
+    align-self: center; // убрать на большом экране
+    // width: 150px;
+    // margin: 0 auto;
+}
+
+
+/* .logo__row{
+
+ display: flex;
+ flex-direction: column;  
+} */
+
+.logo__img {
+    /* flex: 1 1 auto; */
+    width: 150px;
+    height: 150px;
+    background: url("../../img/no-photo.png") 50%/100% no-repeat;
+    border: 5px solid #bbb;
+    border-radius: 50%
+}
+
+.insert__img {
+    border: 2px solid #bbb;
+    border-radius: 50%;
+    margin: 10px 0 0 0;
+    height: 35px;
+    width: 35px;
+    align-self: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: url('../../img/insert.png') 50% no-repeat;
+}
+
+.phone__row {
+    // border: 1px solid red
+    position: relative;
+}
+
+.phone {
+    font-size: 20px;
+    /* font-weight: 600; */
+    align-self: center;
+    // text-align: center;
+}
+
+.phone input {
+    line-height: 25px;
+    width: 160px;
+    height: 30px;
+    font-size: 20px;
+    background: transparent;
+    border-radius: 2px;
+    border: 1px solid #bbb;
+    color: #fff;
+}
+
+.phone__column {
+    margin: 0 0 10px 0;
+}
+
+.phone__column:last-child {
+    margin: 0 0 10px 0;
+}
+
+.phone__column label {
+    display: block;
+    margin: 0 0 10px 0;
+}
+
+.hide {
+    display: none;
+}
+
+.slider__layer {
+    position: relative;
+}
+
+.slider {
+    position: relative;
+    overflow: hidden;
+    width: 215px;
+}
+
+.slider__wrapper {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    align-self: center;
+    transition: transform .8s ease;
+}
+
+.slider__item {
+    text-align: center;
+    flex: 1 1 100%;
+    min-width: 100%;
+}
+
+.slider__left {
+    /* margin: 0 10px 0 0; */
+}
+
+.slider__right {}
+
+.slider__indicators {
+    bottom: 0;
+    left: 0;
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    margin-right: 15%;
+    margin-left: 15%;
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.slider__indicators li {
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    width: 10px;
+    height: 10px;
+    margin-right: 3px;
+    margin-left: 3px;
+    cursor: pointer;
+    border: 1px solid #bbb;
+    border-radius: 50%;
+    /* background-clip: padding-box;
+ border-top: 10px solid transparent;
+ border-bottom: 10px solid transparent; */
+    transition: background-color .6s ease;
+}
+
+.slider__indicators li.active {
+    background-color: #bbb;
+}
+
+.slider__control {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    left: 0;
+    top: 0;
+    color: #fff;
+    text-decoration: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.slider__control_left {
+    left: -30px;
+    top: 120px;
+}
+
+.slider__control_right {
+    left: 230px;
+    top: 120px;
+}
+
+// =============================
+.modal__footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    border-top: 1px solid #eee;
+}
+
+.modal__ok_btn,
+.modal__cancel_btn {
+    border: 2px solid #bbb;
+    border-radius: 50%;
+    margin: 10px 0 10px 0;
+    height: 30px;
+    width: 30px;
+    align-self: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.modal__ok_btn {
+    display: inline-block;
+    background: url('../../img/checkmark24.svg') 50% no-repeat;
+}
+
+.modal__cancel_btn {
+    /* margin: 0; */
+    display: inline-block;
+    background: url('../../img/cancel-24.svg') 50% no-repeat;
+}
+
+@media(min-width: 768px) {
+    .modal__window {
+        width: 400px;
+        height: 650px;
+    }
+    .form__flex__row {
+        // display: flex;
+        flex-direction: row;
+        .form__logo {
+            align-self: initial;
+        }
+    }
+    .hide {
+        display: initial;
+    }
+    .modal__layer {
+        border-radius: 15px;
+    }
+    .slider__wrapper {
+        flex-direction: column!important;
+        transform: translateX(0%)!important;
+    }
+    .slider__indicators,
+    .slider__control {
+        display: none;
+    }
+    .slider__item {
+        transform: translateX(0%)!important;
+    }
+}
+
+@media (min-width: 768px) {}
