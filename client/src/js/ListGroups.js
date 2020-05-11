@@ -12,7 +12,6 @@ export default class ListGroups {
     }
 
     create() {
-
         const groupsContainer = document.createElement('div')
         groupsContainer.classList.add('phoneBook__column', 'phoneBook__groups', 'groups')
         groupsContainer.insertAdjacentHTML('afterbegin', toHtml(this.listElement))
@@ -78,7 +77,7 @@ export default class ListGroups {
             } else if (event.target.closest('[data-edit-stop]')) {
                 const [...removableItems] = document.querySelectorAll('[data-removable]');
                 removableItems.forEach(item => {
-                    // item.lastElementChild.style.display = 'none'
+
                     item.lastElementChild.classList.add('disappear')
                     item.lastElementChild.classList.remove('appear')
                 })
@@ -87,16 +86,16 @@ export default class ListGroups {
                 groupsContainer.querySelector('[data-edit]').style.display = 'inline-block'
 
                 event.target.closest('.groups').classList.add('decreaseWidth')
+                event.target.closest('.groups').classList.remove('increaseWidth')
 
                 document.querySelector('.groups__listGroup').classList.add('upWidth')
-                    // document.querySelector('.groups__listGroup').classList.remove('downWidth')
-
             }
         })
     }
 
     show() {
         const groupsContainer = document.querySelector('.groups')
+        groupsContainer.classList.remove('decreaseWidth')
         groupsContainer.classList.add('show')
         groupsContainer.classList.remove('hide')
         this.visible = true
