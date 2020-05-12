@@ -212,11 +212,15 @@
       li:active {
           color: #fff
       }
+      .list-el-value {
+          display: inline-block;
+      }
       .inp_new_group {
           background-color: rgba(56, 54, 54, 0);
           color: #bbb;
           text-align: center;
           font-size: 16px;
+          max-width: 105px;
       }
       .inp_new_group:focus {
           border: 1px solid #bbb;

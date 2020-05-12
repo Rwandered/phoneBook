@@ -19,7 +19,20 @@ export default class ListGroups {
 
         groupsContainer.addEventListener('click', async() => {
             if (event.target.classList.contains('rename_group')) {
-                console.log(event.target)
+
+                const groupForRename = event.target.closest('[data-list-el]')
+                const $groupForRename = groupForRename.querySelector('.list-el-value')
+                const updateInput = new FalseInput({
+                    selector: `data-group-id='${groupForRename.dataset.groupId}'`,
+                    defaultText: $groupForRename.textContent,
+                    inputType: 'update',
+                })
+                $groupForRename.textContent = ''
+
+                event.target.style.pointerEvents = 'none' // чтобы отключить клик по кнопке
+
+
+
             } else if (event.target.classList.contains('delete_group')) {
                 console.dir(event.target)
                     // удаляем из отображения группу и удаляем ее с сервера, плю удаляем ее из списка у карточек пользователя
@@ -30,16 +43,18 @@ export default class ListGroups {
                 allDataListEl.forEach(el => el.classList.remove('active_list_el'))
                 event.target.classList.add('active_list_el')
                 document.querySelector('[data-gpname]').textContent = event.target.textContent
-                const cards = !!event.target.dataset.allContact ? await getCards() : await getCardByGroup(event.target.textContent)
+                const cards = !!event.target.dataset.allContact ? await getCards() : await getCardByGroup(event.target.dataset.groupId)
+                    // getCardByGroup - принимает id группы
                 renderCard(cards.data)
                 this.close()
             } else if (event.target.closest('[data-new-group]')) {
-                // console.log(event.target)
+
                 new FalseInput({ selector: 'data-false-input', defaultText: 'New group' })
-                    // console.log(falseInput)
+
             } else if (event.target.closest('[data-setting]')) {
-                //тут можно создавать модальку
+
                 modalComponent()
+
             } else if (event.target.closest('[data-edit]')) {
                 // получаем все элементы с корзиной, показывыаем их , скрываем кнопку с data edit и показываем кнопку data edit stop
                 const [...removableItems] = document.querySelectorAll('[data-removable]')
@@ -54,12 +69,6 @@ export default class ListGroups {
                     // item.lastElementChild.classList.remove('groups__controls_wrapper_hide')
                     item.lastElementChild.classList.add('appear')
                     item.lastElementChild.classList.remove('disappear')
-
-
-                    // new FalseInput( {
-                    //  selector: ,
-                    //  defaultText: 
-                    // })
                 })
 
 
@@ -154,7 +163,8 @@ const toLi = groupsList => {
     console.log('groupsList: ', groupsList)
     const $groupsList = groupsList.filter(group => group.name != 'All Contacts')
         .map(group => `
-        <li data-list-el data-group-type=${group.type} data-removable="true" data-group-id=${group.id}>${group.name}
+        <li data-list-el data-group-type=${group.type} data-removable="true" data-group-id=${group.id}>
+        <p class=list-el-value>${group.name}</p>
          <div class="groups__controls_wrapper groups__controls_wrapper_hide">
           <div class="groups__edit_controls">
             <div class="rename_group "></div>
