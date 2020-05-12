@@ -33,34 +33,42 @@ export default class FalseInput {
 
     send() {
         //тут надо учесть метод update или new
+        // если метод  new  то делаем то что ниже
+        // если метод update то нужно нужно просто обратно вешать фокус на input
+        // и уже потом добавим уведомление, что поле обязательно заполнить
 
         const falseInputValue = this.falseInput.value
         if (falseInputValue.length === 0) {
-            return this.destroy()
+            console.log('this.inputType: ', this.inputType)
+            return this.inputType === 'new' ? this.destroy() : this.falseInput.focus()
         }
         // а тут метод по созданию новой li и запрос на сервер для добавления там новой группы
         // document.querySelector(`[data-false-input]`)
 
-        // const $group = setGroup(falseInputValue)
-        // console.log($group)
-        // $group.then(result => {
+        const $group = setGroup(falseInputValue)
+            // console.log($group)
+        $group.then(result => {
 
-        //     document.querySelector(`[${this.selector}]`)
-        //         .insertAdjacentHTML('beforebegin', `
-        //   <li data-list-el data-group-type=user data-removable="true" data-group-id=${result.group.id}>
-        //   <p class=list-el-value>${falseInputValue}</p>
-        //    <div class="groups__controls_wrapper ${ document.querySelector('.editing__mode') ? 'groups__controls_wrapper_show' : 'groups__controls_wrapper_hide'}">
-        //      <div class="groups__edit_controls">
-        //       <div class="rename_group">
-        //       </div>
-        //       <div class="delete_group">
-        //       </div>
-        //     </div>
-        //    </div>           
-        //   </li>`)
+            if (this.inputType === 'new') {
 
-        // this.destroy()
-        // })
+                document.querySelector(`[${this.selector}]`)
+                    .insertAdjacentHTML('beforebegin', `
+          <li data-list-el data-group-type=user data-removable="true" data-group-id=${result.group.id}>
+          <p class=list-el-value>${falseInputValue}</p>
+           <div class="groups__controls_wrapper ${ document.querySelector('.editing__mode') ? 'groups__controls_wrapper_show' : 'groups__controls_wrapper_hide'}">
+             <div class="groups__edit_controls">
+              <div class="rename_group">
+              </div>
+              <div class="delete_group">
+              </div>
+            </div>
+           </div>           
+          </li>`)
+            } else {
+                document.querySelector(`[${this.selector}]`).querySelector('.list-el-value').textContent = result.group.name
+            }
+            this.destroy()
+        })
 
     }
 

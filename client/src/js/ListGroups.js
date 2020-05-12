@@ -9,6 +9,7 @@ export default class ListGroups {
         this.selector = selector
         this.visible = false
         this.create()
+
     }
 
     create() {
@@ -19,19 +20,16 @@ export default class ListGroups {
 
         groupsContainer.addEventListener('click', async() => {
             if (event.target.classList.contains('rename_group')) {
-
-                const groupForRename = event.target.closest('[data-list-el]')
-                const $groupForRename = groupForRename.querySelector('.list-el-value')
-                const updateInput = new FalseInput({
-                    selector: `data-group-id='${groupForRename.dataset.groupId}'`,
-                    defaultText: $groupForRename.textContent,
-                    inputType: 'update',
-                })
-                $groupForRename.textContent = ''
-
-                event.target.style.pointerEvents = 'none' // чтобы отключить клик по кнопке
-
-
+                if (!document.querySelector('.inp_new_group')) {
+                    const groupForRename = event.target.closest('[data-list-el]')
+                    const $groupForRename = groupForRename.querySelector('.list-el-value')
+                    this.updateInput = new FalseInput({
+                        selector: `data-group-id='${groupForRename.dataset.groupId}'`,
+                        defaultText: $groupForRename.textContent,
+                        inputType: 'update',
+                    })
+                    $groupForRename.textContent = ''
+                }
 
             } else if (event.target.classList.contains('delete_group')) {
                 console.dir(event.target)
@@ -39,11 +37,14 @@ export default class ListGroups {
                 event.target.closest('[data-list-el]').remove()
 
             } else if (event.target.closest('[data-list-el]')) {
-                const allDataListEl = groupsContainer.querySelectorAll('[data-list-el]')
+                const listElem = event.target.closest('[data-list-el]')
+
+                const allDataListEl = groupsContainer.querySelectorAll('.list-el-value')
                 allDataListEl.forEach(el => el.classList.remove('active_list_el'))
                 event.target.classList.add('active_list_el')
+
                 document.querySelector('[data-gpname]').textContent = event.target.textContent
-                const cards = !!event.target.dataset.allContact ? await getCards() : await getCardByGroup(event.target.dataset.groupId)
+                const cards = !!listElem.dataset.allContact ? await getCards() : await getCardByGroup(listElem.dataset.groupId)
                     // getCardByGroup - принимает id группы
                 renderCard(cards.data)
                 this.close()
@@ -143,7 +144,9 @@ const toHtml = list => {
   <!--Элемент для списка групп -->
   <div class="groups__column groups__listGroup">
     <ul data-ls>
-    <li data-all-contact='true' data-list-el data-group-type=system>All Contacts </li>
+    <li data-all-contact='true' data-list-el data-group-type=system>
+     <p class=list-el-value>All Contacts</p>
+    </li>
      ${toLi(list)}
     <li data-false-input></li>
     </ul>
