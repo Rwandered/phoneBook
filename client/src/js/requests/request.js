@@ -42,14 +42,14 @@ export const getCardByGroup = async group => {
     } catch (e) {}
 }
 
-export const setGroup = async group => {
+export const setGroup = async options => {
     try {
         const response = await fetch(`http${ADDRESS}${PORT}/group`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({ group })
+            body: JSON.stringify(options)
         })
 
         return response.json()

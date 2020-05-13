@@ -45,30 +45,34 @@ export default class FalseInput {
         // а тут метод по созданию новой li и запрос на сервер для добавления там новой группы
         // document.querySelector(`[data-false-input]`)
 
-        const $group = setGroup(falseInputValue)
+        const $group = setGroup({ reqType: this.inputType, value: falseInputValue, groupId: this.groupId })
             // console.log($group)
         $group.then(result => {
 
-            if (this.inputType === 'new') {
+                if (this.inputType === 'new') {
 
-                document.querySelector(`[${this.selector}]`)
-                    .insertAdjacentHTML('beforebegin', `
-          <li data-list-el data-group-type=user data-removable="true" data-group-id=${result.group.id}>
-          <p class=list-el-value>${falseInputValue}</p>
-           <div class="groups__controls_wrapper ${ document.querySelector('.editing__mode') ? 'groups__controls_wrapper_show' : 'groups__controls_wrapper_hide'}">
-             <div class="groups__edit_controls">
-              <div class="rename_group">
-              </div>
-              <div class="delete_group">
-              </div>
-            </div>
-           </div>           
-          </li>`)
-            } else {
-                document.querySelector(`[${this.selector}]`).querySelector('.list-el-value').textContent = result.group.name
-            }
-            this.destroy()
-        })
+                    document.querySelector(`[${this.selector}]`)
+                        .insertAdjacentHTML('beforebegin', `
+                     <li data-list-el data-group-type=user data-removable="true" data-group-id=${result.group.id}>
+                     <p class=list-el-value>${result.group.name}</p>
+                      <div class="groups__controls_wrapper ${ document.querySelector('.editing__mode') ?
+                       'groups__controls_wrapper_show' : 'groups__controls_wrapper_hide'}">
+                        <div class="groups__edit_controls">
+                         <div class="rename_group">
+                         </div>
+                         <div class="delete_group">
+                         </div>
+                       </div>
+                      </div>           
+                     </li>`)
+                } else {
+                    document.querySelector(`[${this.selector}]`).querySelector('.list-el-value').textContent = result.group.name
+                }
+                this.destroy()
+            })
+            .catch(error => {
+                console.log('Error: ', error)
+            })
 
     }
 

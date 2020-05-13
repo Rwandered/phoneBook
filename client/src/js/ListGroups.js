@@ -27,6 +27,7 @@ export default class ListGroups {
                         selector: `data-group-id='${groupForRename.dataset.groupId}'`,
                         defaultText: $groupForRename.textContent,
                         inputType: 'update',
+                        groupId: +groupForRename.dataset.groupId,
                     })
                     $groupForRename.textContent = ''
                 }

@@ -16,10 +16,48 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    const { group } = req.body
-    const $group = { id: randomId(5, 100000), name: group, type: 'user' }
-    groups.push($group)
-    res.json({ message: 'OK', group: $group })
+    const { reqType, value, groupId } = req.body
+
+    console.log('Type req: ', reqType)
+    console.log('Value req: ', value)
+
+    if (reqType === 'new') {
+
+        const $group = { id: randomId(5, 100000), name: value, type: 'user' }
+
+        const r = groups.filter(group => group.name.includes(value))
+        console.log('r: ', r.length)
+        console.log('All groups: ', groups)
+
+        const doubleGroup = groups.find(group => group.name === value)
+        if (doubleGroup) {
+            const repeatGroups = groups.filter(group => group.name.includes(value))
+            $group.name = `${value}-${repeatGroups.length}`
+        }
+        groups.push($group)
+        res.json({ message: 'Groups has been created...', group: $group })
+
+    } else {
+        console.log('Group id: ', groupId)
+        const $group = groups.find(group => group.id === groupId)
+
+        const doubleGroup = groups.find(group => group.name === value)
+        if (doubleGroup) {
+
+            if (doubleGroup.id !== groupId) {
+                const repeatGroups = groups.filter(group => group.name.includes(value))
+                $group.name = `${value}-${repeatGroups.length}`
+            }
+
+        } else {
+            $group.name = value
+        }
+
+        console.log('Needed group: ', $group)
+        console.log('Groups: ', groups)
+
+        res.json({ message: 'Groups has been update...', group: $group })
+    }
 })
 
 
