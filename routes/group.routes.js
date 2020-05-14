@@ -3,15 +3,6 @@ const $ = require('../initData.js')
 
 const router = new Router
 
-// const groups = ['All Contacts', 'Family', 'Friends', 'Co-Workers']
-
-// const groups = [
-//     { id: 1, name: 'All Contacts', type: 'system' },
-//     { id: 2, name: 'Family', type: 'system' },
-//     { id: 3, name: 'Friends', type: 'system' },
-//     { id: 4, name: 'Co-Workers', type: 'system' }
-// ]
-
 const groups = $.groups
 
 router.get('/', (req, res) => {
@@ -21,16 +12,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const { reqType, value, groupId } = req.body
 
-    console.log('Type req: ', reqType)
-    console.log('Value req: ', value)
-
     if (reqType === 'new') {
 
         const $group = { id: randomId(5, 100000), name: value, type: 'user' }
-
-        const r = groups.filter(group => group.name.includes(value))
-        console.log('r: ', r.length)
-        console.log('All groups: ', groups)
 
         const doubleGroup = groups.find(group => group.name === value)
         if (doubleGroup) {
@@ -41,7 +25,7 @@ router.post('/', (req, res) => {
         res.json({ message: 'Groups has been created...', group: $group })
 
     } else {
-        console.log('Group id: ', groupId)
+
         const $group = groups.find(group => group.id === groupId)
 
         const doubleGroup = groups.find(group => group.name === value)
@@ -56,31 +40,28 @@ router.post('/', (req, res) => {
             $group.name = value
         }
 
-        console.log('Needed group: ', $group)
-        console.log('Groups: ', groups)
-
         res.json({ message: 'Groups has been update...', group: $group })
     }
 })
 
 router.delete('/', (req, res) => {
     const { groupId } = req.body
-    console.log('Nedded id: ', groupId)
-    console.log('All group: ', groups)
     groups.forEach((group, index) => {
         if (group.id === groupId) {
-            groups.splice(index, 1)
+            groups.splice(index, 1) // delete group from group array
 
-            const needCards = $.cards.filter(card => card.groups.includes(groupId))
-            console.log('Card with need id: ', needCard)
-            const indexR = needCards.map(card => card.groups.findIndex(g => g === groupId))
-            console.log('Need id: ', indexR)
+            $.cards.forEach((card, index) => {
 
-            // а также удалить у карточки 
+                const cardGroups = card.groups
+                const $index = cardGroups.findIndex(gr => gr === groupId)
+
+                if ($index !== -1) {
+                    $.cards[index].groups.splice($index, 1)
+                }
+            })
         }
     })
-    console.log('All group without 1 group: ', groups)
-
+    res.json({ message: 'Group has been deleted...' })
 })
 
 
