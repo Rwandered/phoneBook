@@ -5,6 +5,7 @@ const bodyParser = require('body-parser') // нужет чотбы обраба�
 
 
 const PORT = config.get('port') || 5000
+const test = [1, 2, 3]
 
 const app = express()
 

@@ -56,6 +56,21 @@ export const setGroup = async options => {
     } catch (e) {}
 }
 
+
+export const deleteGroup = async groupId => {
+    try {
+        const response = await fetch(`http${ADDRESS}${PORT}/group`, {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({ groupId })
+        })
+        console.log(response)
+    } catch (e) {}
+}
+
+
 export const addPhone = async options => {
     try {
         const response = await fetch(`http${ADDRESS}${PORT}/card`, {

@@ -1,4 +1,4 @@
-import { getCards, getCardByGroup } from "./requests/request"
+import { getCards, getCardByGroup, deleteGroup } from "./requests/request"
 import Card from "./Card"
 import FalseInput from "./FalseInput"
 import modalComponent from "./components/modalComponent"
@@ -35,7 +35,11 @@ export default class ListGroups {
             } else if (event.target.classList.contains('delete_group')) {
                 console.dir(event.target)
                     // удаляем из отображения группу и удаляем ее с сервера, плю удаляем ее из списка у карточек пользователя
-                event.target.closest('[data-list-el]').remove()
+                const $group = event.target.closest('[data-list-el]')
+
+                console.log('###: ', $group.dataset.groupId)
+                deleteGroup(+$group.dataset.groupId)
+                $group.remove()
 
             } else if (event.target.closest('[data-list-el]')) {
                 const listElem = event.target.closest('[data-list-el]')
