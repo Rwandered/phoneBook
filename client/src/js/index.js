@@ -10,30 +10,30 @@ const description = new Description('phoneBook__row')
 
 
 const createListBlock = async() => {
-    try {
-        const list = new ListGroups({ groups: await groups(), selector: 'phoneBook__row' })
-        workWithBlock(list)
-    } catch (err) {
-        err => console.error("Get groups error: ", err)
-    }
+  try {
+    const list = new ListGroups({ groups: await groups(), selector: 'phoneBook__row' })
+    workWithBlock(list)
+  } catch (err) {
+    err => console.error("Get groups error: ", err)
+  }
 }
 
 createListBlock()
 
 const workWithBlock = element => {
-    document.querySelector('.body').addEventListener('click', () => {
+  document.querySelector('.body').addEventListener('click', () => {
 
-        if (event.target.closest('[data-menu]')) {
-            description.close()
-            element.show()
-        } else if (event.target.closest('[data-card]')) {
-            element.close()
-            description.show()
-        } else {
-            description.close()
-            element.close()
-        }
-    })
+    if (event.target.closest('[data-menu]')) {
+      description.close()
+      element.show()
+    } else if (event.target.closest('[data-card]')) {
+      element.close()
+      description.show()
+    } else {
+      description.close()
+      element.close()
+    }
+  })
 }
 
 

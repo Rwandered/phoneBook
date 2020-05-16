@@ -6,69 +6,69 @@ const router = new Router
 const groups = $.groups
 
 router.get('/', (req, res) => {
-    res.json({ data: groups })
+  res.json({ data: groups })
 })
 
 router.post('/', (req, res) => {
-    const { reqType, value, groupId } = req.body
+  const { reqType, value, groupId } = req.body
 
-    if (reqType === 'new') {
+  if (reqType === 'new') {
 
-        const $group = { id: randomId(5, 100000), name: value, type: 'user' }
+    const $group = { id: randomId(5, 100000), name: value, type: 'user' }
 
-        const doubleGroup = groups.find(group => group.name === value)
-        if (doubleGroup) {
-            const repeatGroups = groups.filter(group => group.name.includes(value))
-            $group.name = `${value}-${repeatGroups.length}`
-        }
-        groups.push($group)
-        res.json({ message: 'Groups has been created...', group: $group })
+    const doubleGroup = groups.find(group => group.name === value)
+    if (doubleGroup) {
+      const repeatGroups = groups.filter(group => group.name.includes(value))
+      $group.name = `${value}-${repeatGroups.length}`
+    }
+    groups.push($group)
+    res.json({ message: 'Groups has been created...', group: $group })
+
+  } else {
+
+    const $group = groups.find(group => group.id === groupId)
+
+    const doubleGroup = groups.find(group => group.name === value)
+    if (doubleGroup) {
+
+      if (doubleGroup.id !== groupId) {
+        const repeatGroups = groups.filter(group => group.name.includes(value))
+        $group.name = `${value}-${repeatGroups.length}`
+      }
 
     } else {
-
-        const $group = groups.find(group => group.id === groupId)
-
-        const doubleGroup = groups.find(group => group.name === value)
-        if (doubleGroup) {
-
-            if (doubleGroup.id !== groupId) {
-                const repeatGroups = groups.filter(group => group.name.includes(value))
-                $group.name = `${value}-${repeatGroups.length}`
-            }
-
-        } else {
-            $group.name = value
-        }
-
-        res.json({ message: 'Groups has been update...', group: $group })
+      $group.name = value
     }
+
+    res.json({ message: 'Groups has been update...', group: $group })
+  }
 })
 
 router.delete('/', (req, res) => {
-    const { groupId } = req.body
-    groups.forEach((group, index) => {
-        if (group.id === groupId) {
-            groups.splice(index, 1) // delete group from group array
+  const { groupId } = req.body
+  groups.forEach((group, index) => {
+    if (group.id === groupId) {
+      groups.splice(index, 1) // delete group from group array
 
-            $.cards.forEach((card, index) => {
+      $.cards.forEach((card, index) => {
 
-                const cardGroups = card.groups
-                const $index = cardGroups.findIndex(gr => gr === groupId)
+        const cardGroups = card.groups
+        const $index = cardGroups.findIndex(gr => gr === groupId)
 
-                if ($index !== -1) {
-                    $.cards[index].groups.splice($index, 1)
-                }
-            })
+        if ($index !== -1) {
+          $.cards[index].groups.splice($index, 1)
         }
-    })
-    res.json({ message: 'Group has been deleted...' })
+      })
+    }
+  })
+  res.json({ message: 'Group has been deleted...' })
 })
 
 
 
 const randomId = (min, max) => {
-    const rand = min + Math.random() * (max + 1 - min);
-    return Math.floor(rand);
+  const rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
 }
 
 

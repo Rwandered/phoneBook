@@ -30,5 +30,5 @@ app.use('/card', require('./routes/card.routes'))
 
 
 app.listen(PORT, () => {
-    console.log(`Server has been started on PORT ${PORT}`);
+  console.log(`Server has been started on PORT ${PORT}`);
 });

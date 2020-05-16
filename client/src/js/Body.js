@@ -2,27 +2,27 @@ import ListGroups from "./ListGroups"
 import Description from "./Description"
 
 export default class Body {
-    constructor() {}
-    create(selector) {
-        const bodyContainer = document.createElement('div')
-        bodyContainer.classList.add('phoneBook__column', 'phoneBook__body', 'body')
-        bodyContainer.insertAdjacentHTML('afterbegin', toHtml())
-        document.querySelector(`.${selector}`).insertAdjacentElement('beforeend', bodyContainer)
+  constructor() {}
+  create(selector) {
+    const bodyContainer = document.createElement('div')
+    bodyContainer.classList.add('phoneBook__column', 'phoneBook__body', 'body')
+    bodyContainer.insertAdjacentHTML('afterbegin', toHtml())
+    document.querySelector(`.${selector}`).insertAdjacentElement('beforeend', bodyContainer)
 
-        bodyContainer.addEventListener('click', handler)
-    }
+    bodyContainer.addEventListener('click', handler)
+  }
 }
 
-const handler = () => {
-    if (event.target.closest('[data-menu]')) {
-        new ListGroups().show()
-    } else if (event.target.closest('[data-card]')) {
-        new Info().show()
-    }
+const handler = event => {
+  if (event.target.closest('[data-menu]')) {
+    new ListGroups().show()
+  } else if (event.target.closest('[data-card]')) {
+    new Info().show()
+  }
 }
 
 const toHtml = () => {
-    return `<div class="body__header header">
+  return `<div class="body__header header">
     <!-- первый flex элемент с иконкой группы и ее именем -->
     <div class="header__column header__img">
       <img src="groupLogo.png" alt="gpL">
