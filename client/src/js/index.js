@@ -5,7 +5,7 @@ import { getGroups } from './requests/request'
 
 
 
-const groups = async() => await getGroups()
+const groups = async () => await getGroups()
 const description = new Description('phoneBook__row')
 
 

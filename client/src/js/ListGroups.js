@@ -170,7 +170,8 @@ const toHtml = list => {
 
 const toLi = groupsList => {
   console.log('groupsList: ', groupsList)
-  const $groupsList = groupsList.filter(group => group.name != 'All Contacts')
+  const $groupsList = groupsList
+    .filter(group => group.name != 'All Contacts')
     .map(group => `
         <li data-list-el data-group-type=${group.type} data-removable="true" data-group-id=${group.id}>
         <p class=list-el-value>${group.name}</p>
@@ -180,7 +181,8 @@ const toLi = groupsList => {
             <div class="delete_group "></div>
           </div>
          </div>
-        </li>`).join(' ')
+        </li>`)
+    .join(' ')
 
   return $groupsList
 }

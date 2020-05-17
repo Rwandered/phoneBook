@@ -306,3 +306,28 @@
 }
 
 @media (min-width: 768px) {}
+
+
+
+select {
+    position: relative;
+    width: 160px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+
+    option {
+        background-color: #383636;
+        height: 30px;
+        cursor: pointer;
+    }
+}
+

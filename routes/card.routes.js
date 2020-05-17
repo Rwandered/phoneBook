@@ -63,8 +63,9 @@ router.put('/', (req, res) => {
 //создание новой картчоки
 
 router.post('/', upload.single('logo'), (req, res) => {
-
-  const { firstName, lastName, group = 'No group', info = '', mobile, home = '', work = '' } = req.body
+  console.log('Req body: ',req.body)
+  const { firstName, lastName, group = 'All Contacts', info = '', mobile, home = '', work = '' } = req.body
+  const groupId = getGroupId(group)
   const newCard = {
     id: 4,
     img: 'no-photo.png',
@@ -76,7 +77,7 @@ router.post('/', upload.single('logo'), (req, res) => {
       { type: 'work', number: work },
       { type: 'home', number: home }
     ],
-    group
+    groups: [groupId]
   }
   if (req.file) {
     newCard.img = req.file.filename
@@ -84,6 +85,9 @@ router.post('/', upload.single('logo'), (req, res) => {
   cards.push(newCard)
   res.json({ card: newCard })
 })
+
+const getGroupId = groupName => $.groups.find( group => group.name === groupName).id
+
 
 
 

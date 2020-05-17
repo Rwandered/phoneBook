@@ -2,6 +2,7 @@ import Modal from "../Modal"
 import { setCard, getCards, getCardByGroup } from "../requests/request"
 import Slider from "../components/Slider"
 import { renderCard } from "../ListGroups"
+import getSelect from "./Select/Select";
 
 export default function modalComponent() {
 
@@ -48,34 +49,6 @@ export default function modalComponent() {
 
 }
 
-
-const _getHtmlForModal = () => {
-  return `
-  <form action class="form__flex__row" enctype="multipart/form-data">
-  
-  <div class="form__column form__logo logo logo__row">
-
-    <div class="logo__img"></div>
-    
-    <div class="insert__img">
-      <input class="phone__img_field" type="file" name="logo" style="opacity:0">
-    </div>
-
-  </div>
-
-
-  <div class="form__column phone phone__row">  
-    
-  </div>
-
-   <!-- <a class="slider__control slider__control_left slider__control_show" href="#" role="button">&lt</a>
-    <a class="slider__control slider__control_right slider__control_show" href="#" role="button">&gt</a> -->
-
-  </div>
-
-</form>`
-}
-
 const _getFormBody = () => {
   const form = document.createElement('form')
   form.classList.add('form__flex__row')
@@ -98,10 +71,7 @@ const _getFormBody = () => {
     sliderItems: _getSliderItems(),
     indicator: true,
   })
-
   const newSlider = slider.create()
-  // console.log(newSlider)
-
   sliderContainer.insertAdjacentElement('beforeend', newSlider)
   form.insertAdjacentElement('beforeend', sliderContainer)
 
@@ -113,13 +83,7 @@ const _getFormData = () => {
   const frm = document.querySelector('.form__flex__row')
   const formData = new FormData(frm)
 
-  console.log('Form data: ', formData)
   return formData
-  // formData.append('mobile', frm.m_phone.value)
-  // formData.append('home', frm.h_phone.value)
-  // formData.append('work', frm.w_phone.value)
-  // formData.append('info', frm.some_info.value)
-  // formData.append('img', frm.img_phone.value)
 }
 
 const _getSliderItems = () => {
@@ -136,7 +100,9 @@ const _getSliderItems = () => {
 
 <div class="phone__column">
  <label for="group">Group</label>
- <input class="phone__txt_field" type="text" name="group" required>
+ <select name="group" class="group__select">
+   ${getSelect('group__select')}
+ </select>
 </div>`,
     `
         <div class=" phone__column ">
@@ -160,9 +126,6 @@ const _getSliderItems = () => {
 </div>`
   ]
 }
-
-
-
 
 {
   /* <div class="slider">

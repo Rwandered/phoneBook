@@ -14,7 +14,7 @@ export default class FalseInput {
   create() {
 
     this.falseInput = toNode(this.defaultText)
-    console.log('this.falseInput: ', this.falseInput)
+    // console.log('this.falseInput: ', this.falseInput)
     document.querySelector(`[${this.selector}]`).insertAdjacentElement(`afterbegin`, this.falseInput)
     this.falseInput.focus()
     this.falseInput.select()
@@ -32,15 +32,12 @@ export default class FalseInput {
   }
 
   send() {
-    //тут надо учесть метод update или new
-    // если метод  new  то делаем то что ниже
-    // если метод update то нужно нужно просто обратно вешать фокус на input
-    // и уже потом добавим уведомление, что поле обязательно заполнить
-    console.log('Default txt: ', this.defaultText)
-    console.log('False input: ', this.falseInput)
+
+    // console.log('Default txt: ', this.defaultText)
+    // console.log('False input: ', this.falseInput)
     const falseInputValue = this.falseInput.value
     if (falseInputValue.length === 0) {
-      console.log('this.inputType: ', this.inputType)
+      // console.log('this.inputType: ', this.inputType)
       if(this.inputType === 'update') {
         document.querySelector(`[${this.selector}]`).querySelector('.list-el-value').textContent = this.defaultText
       }
