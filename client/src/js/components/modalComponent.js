@@ -1,5 +1,5 @@
 import Modal from "../Modal"
-import { setCard, getCards, getCardByGroup } from "../requests/request"
+import {setCard, getCards, getCardByGroup, setCardLogo} from "../requests/request"
 import Slider from "../components/Slider"
 import { renderCard } from "../ListGroups"
 import getSelect from "./Select/Select";
@@ -15,10 +15,6 @@ export default function modalComponent() {
       handler() {
         setCard(_getFormData())
           .then(async res => {
-            const logo = document.querySelector('.logo__img')
-            logo.style.background = `url(${res.card.img}) 50%/100% no-repeat`
-            console.log(res)
-
             const activeGroup = document.querySelector('.active_list_el')
             if (activeGroup) {
               let cards
@@ -58,7 +54,7 @@ const _getFormBody = () => {
   <div class="form__column form__logo logo logo__row">
    <div class="logo__img"></div>
    <div class="insert__img">
-    <input class="phone__img_field" type="file" name="logo" style="opacity:0">
+    <input class="phone__img_field" type="file" name="logo" style="opacity:0" data-card-logo>
    </div>
   </div>`)
 
@@ -71,12 +67,21 @@ const _getFormBody = () => {
     sliderItems: _getSliderItems(),
     indicator: true,
   })
+
   const newSlider = slider.create()
   sliderContainer.insertAdjacentElement('beforeend', newSlider)
   form.insertAdjacentElement('beforeend', sliderContainer)
 
-  return form
+  const logoCardInput = form.querySelector('[data-card-logo]')
+  logoCardInput.addEventListener('change', () => {
+    setCardLogo(_getFormData())
+        .then( res => {
+          const logo = form.querySelector('.logo__img')
+          logo.style.background = `url(${res.logo}) 50%/100% no-repeat`
+        })
+  })
 
+  return form
 }
 
 const _getFormData = () => {
@@ -100,12 +105,12 @@ const _getSliderItems = () => {
 
 <div class="phone__column">
  <label for="group">Group</label>
- <select name="group" class="group__select">
+ <select name="group" class="group__select" multiple>
    ${getSelect('group__select')}
  </select>
 </div>`,
     `
-        <div class=" phone__column ">
+<div class=" phone__column ">
  <label for="info">Some information</label>
  <input class="phone__txt_field" type="text" name="info">
 </div> 

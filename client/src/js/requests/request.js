@@ -1,11 +1,5 @@
 import { PORT, ADDRESS } from "../constants/constants"
 
-export const getGroups = async() => {
-  try {
-    return await (await fetch(`http${ADDRESS}${PORT}/group`)).json()
-  } catch (e) {}
-}
-
 export const setCard = async options => {
   try {
 
@@ -39,6 +33,25 @@ export const getCardById = async id => {
 export const getCardByGroup = async group => {
   try {
     return await (await fetch(`http${ADDRESS}${PORT}/card/${group}`)).json()
+  } catch (e) {}
+}
+
+export const setCardLogo = async options => {
+  try {
+
+    console.log('Set card:', options)
+    const response = await fetch(`http${ADDRESS}${PORT}/card/logo`, {
+      method: 'POST',
+      body: options
+    })
+
+    return response.json()
+  } catch (e) {}
+}
+
+export const getGroups = async() => {
+  try {
+    return await (await fetch(`http${ADDRESS}${PORT}/group`)).json()
   } catch (e) {}
 }
 

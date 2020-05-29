@@ -42,8 +42,9 @@
       background-color: rgb(236, 236, 205);
       margin: 0 auto;
       color: #000;
-      height: 680px;
+      //height: 680px;
       position: relative;
+      height: 99vh;
   }
   
   .phoneBook__row {
@@ -59,6 +60,7 @@
       order: 2;
       flex: 1 1 auto; // это строка только для мобильной версии, потом размер будет зада другой
       height: 667px;
+      //height: 100vh;
   }
   
   .body__header {
@@ -119,6 +121,7 @@
       margin: 30px 0 0 0;
       height: 550px;
       overflow: auto;
+      //height: 100vh;
   }
   
   .cards__card {

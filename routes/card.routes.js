@@ -65,9 +65,11 @@ router.put('/', (req, res) => {
 router.post('/', upload.single('logo'), (req, res) => {
   console.log('Req body: ',req.body)
   const { firstName, lastName, group = 'All Contacts', info = '', mobile, home = '', work = '' } = req.body
-  const groupId = getGroupId(group)
+  const groupIdArray = getGroupId(group)
+  const nextId = getCardMaxId() + 1
+
   const newCard = {
-    id: 4,
+    id: nextId,
     img: 'no-photo.png',
     firstName,
     lastName,
@@ -77,8 +79,9 @@ router.post('/', upload.single('logo'), (req, res) => {
       { type: 'work', number: work },
       { type: 'home', number: home }
     ],
-    groups: [groupId]
+    groups: groupIdArray
   }
+
   if (req.file) {
     newCard.img = req.file.filename
   }
@@ -86,8 +89,17 @@ router.post('/', upload.single('logo'), (req, res) => {
   res.json({ card: newCard })
 })
 
-const getGroupId = groupName => $.groups.find( group => group.name === groupName).id
+router.post('/logo', upload.single('logo'), (req, res) => {
+  console.log('Logo: ', req.file)
+  if (req.file) {
+    const logo = req.file.filename
+    return res.json( { logo })
+  }
+  res.status(400)
+})
 
+const getGroupId = groupName => groupName.map( group => $.groups.find( $group => $group.name === group).id)
+ const getCardMaxId = () => $.cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
 
 
 

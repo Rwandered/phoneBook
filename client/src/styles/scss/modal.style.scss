@@ -115,6 +115,15 @@
     cursor: pointer;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     background: url('../../img/insert.png') 50% no-repeat;
+
+    .phone__img_field {
+        height: 35px;
+        width: 35px;
+    }
+    input[type=file] {
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
 }
 
 .phone__row {

@@ -1,5 +1,6 @@
 import FalseFieldInfo from "./FalseFieldInfo"
 import toUpperFistLetter from "./supporting/support"
+import editModal from "./components/EditModal/EditModal"
 
 export default class Info {
   constructor(options) {
@@ -19,7 +20,7 @@ export default class Info {
     this.infoWrapper.dataset.id = this.id
     this.infoWrapper.insertAdjacentHTML('beforeend', this.toHtml())
 
-    this.infoWrapper.addEventListener('click', handler)
+    this.infoWrapper.addEventListener('click', () => handler(this.options) )
     document.querySelector('.phoneBook__description').insertAdjacentElement('beforeend', this.infoWrapper)
   }
 
@@ -38,7 +39,14 @@ export default class Info {
 
     return `
       <!-- блок с именем пользователя -->
-        <div class="description__column description__username">${this.options.firstName}<br>${this.options.lastName}</div>
+        <div class="description__column description__username">
+            <div class="userName">
+                ${this.options.firstName}<br>${this.options.lastName}
+            </div>
+            <div class="userGroup">
+                
+            </div>        
+        </div>
         <!-- блок с фото пользователя -->
         <div class="description__column description__userphoto" style="background: url('${this.options.img || 'no-photo.png'}') 50%/100% no-repeat;"></div>
         <!-- блок с номерами пользователя -->
@@ -56,11 +64,16 @@ export default class Info {
 }
 
 
-const handler = () => {
+const handler = options => {
+  console.log('Данные для модалки: ',options)
   if (event.target.dataset.newPhoneField) {
 
     if (document.querySelector('.false__field__wrapper').dataset.active) {
       const falseFieldInfo = new FalseFieldInfo()
     }
+  } else if (event.target.dataset.editCard) {
+    console.log('Editing card... open modal')
+    editModal(options)
   }
 }
+
