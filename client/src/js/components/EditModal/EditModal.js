@@ -3,6 +3,7 @@ import {getCardByGroup, getCards, setCard, setCardLogo} from "../../requests/req
 import {renderCard} from "../../ListGroups";
 import Slider from "../Slider";
 import getSelect from "../Select/Select";
+import {Select} from "../../utils/Select/select";
 
 const editModal = options => {
 
@@ -28,6 +29,23 @@ const editModal = options => {
     entry: 'phoneBook',
     body: formBody()
   } )
+  const select = new Select('#select', {
+    placeHolder: 'Select something',
+    selectedId: 4,
+    data: [
+      {id: 1, value: 'React'},
+      {id: 2, value: 'Angular'},
+      {id: 3, value: 'Vue'},
+      {id: 4, value: 'Js'},
+      {id: 5, value: 'Node'},
+      {id: 6, value: 'Nest'},
+      {id: 7, value: 'RxJs'},
+    ],
+    onSelect(item) { // некий callback - который вызывается после того как элемент выбран
+      console.log('Selected item: ', item)
+    },
+    multiple: true,
+  })
 
 }
 
@@ -79,45 +97,46 @@ const _getFormData = () => {
 
   return formData
 }
+// <select name="group" class="group__select">
+//   ${getSelect('group__select')}
+// </select>
 
 const _getSliderItems = () => {
   return [`
-<div class="phone__column">
- <label for="firstName">First name</label>
- <input class="phone__txt_field" type="text" name="firstName" required>
-</div>
+            <div class="phone__column">
+             <label for="firstName">First name</label>
+             <input class="phone__txt_field" type="text" name="firstName" required>
+            </div>
 
-<div class="phone__column">
- <label for="lastName">Last name</label>
- <input class="phone__txt_field" type="text" name="lastName" required>
-</div>
+            <div class="phone__column">
+             <label for="lastName">Last name</label>
+             <input class="phone__txt_field" type="text" name="lastName" required>
+            </div>
 
-<div class="phone__column">
- <label for="group">Group</label>
- <select name="group" class="group__select">
-   ${getSelect('group__select')}
- </select>
-</div>`,
-    `
-<div class=" phone__column ">
- <label for="info">Some information</label>
- <input class="phone__txt_field" type="text" name="info">
-</div> 
+            <div class="phone__column">
+             <label for="group">Group</label>
+                <div id="select"></div>
+            </div>
+            
+            <div class=" phone__column ">
+              <label for="info">Some information</label>
+              <input class="phone__txt_field" type="text" name="info">
+            </div>` ,
 
-<div class="phone__column ">
- <label for="mobile">Mobile phone</label>
- <input class="phone__txt_field" type="text" name="mobile">
-</div> 
-
-<div class="phone__column ">
- <label for="home">Home phone</label>
- <input class="phone__txt_field" type="text" name="home">
-</div> 
-
-<div class="phone__column ">
- <label for="work">Work phone</label>
- <input class="phone__txt_field" type="text" name="work">
-</div>`
+            `<div class="phone__column ">
+             <label for="mobile">Mobile phone</label>
+             <input class="phone__txt_field" type="text" name="mobile">
+            </div> 
+            
+            <div class="phone__column ">
+             <label for="home">Home phone</label>
+             <input class="phone__txt_field" type="text" name="home">
+            </div> 
+            
+            <div class="phone__column ">
+             <label for="work">Work phone</label>
+             <input class="phone__txt_field" type="text" name="work">
+            </div>`
   ]
 }
 

@@ -443,6 +443,7 @@
   
   // стили модального окна
   @import './modal.style.scss';
+
   .appear {
       animation: appear 1s 0s 1 forwards;
   }
@@ -554,7 +555,7 @@
           min-width: 200px;
       }
   }
-  
+
   //   @media (min-width: 576px) {
   // }
   @media (min-width: 768px) {
@@ -627,14 +628,14 @@
           animation-fill-mode: forwards;
       }
   }
-  
+
   @media (min-width: 992px) {
       .phoneBook {
           margin: 0 auto;
           margin-top: 50px;
       }
   }
-  
+
   // @media (min-width: 1200px) {
   //   .hi,
   //   .content {

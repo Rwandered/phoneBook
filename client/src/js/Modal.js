@@ -8,7 +8,6 @@ export default class Modal {
     this.handler = options.handler
     this.body = options.body || '<p>Empty modal window</p>'
     this.entry = options.entry
-    this.modal
     this.open()
   }
 
@@ -93,17 +92,11 @@ const _getModalFooter = buttons => {
   buttons.forEach(button => {
     const $button = document.createElement('div')
     $button.classList.add(`modal__${button.type}_btn`)
-    // $button.addEventListener('click', button.handler)
     $button.onclick = button.handler || noop
     $modalFooter.insertAdjacentElement('beforeend', $button)
   })
   return $modalFooter
 }
-
-
-
-
-
 
 // `
 // <div class="modal__layer">
