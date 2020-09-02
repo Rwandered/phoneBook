@@ -1,5 +1,5 @@
-import ListGroups from "./ListGroups"
-import Description from "./Description"
+import ListGroups from "../ListGroups/ListGroups"
+import Description from "../Description/Description"
 
 export default class Body {
   constructor() {}

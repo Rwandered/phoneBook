@@ -1,4 +1,4 @@
-import { setGroup } from "./requests/request"
+import { setGroup } from "../../requests/request"
 
 export default class FalseInput {
   constructor(options) {
@@ -6,7 +6,6 @@ export default class FalseInput {
     this.defaultText = options.defaultText
     this.groupId = options.groupId
     this.inputType = options.inputType || 'new'
-    this.falseInput
     this.create()
   }
 
@@ -14,7 +13,6 @@ export default class FalseInput {
   create() {
 
     this.falseInput = toNode(this.defaultText)
-    // console.log('this.falseInput: ', this.falseInput)
     document.querySelector(`[${this.selector}]`).insertAdjacentElement(`afterbegin`, this.falseInput)
     this.falseInput.focus()
     this.falseInput.select()
@@ -33,18 +31,15 @@ export default class FalseInput {
 
   send() {
 
-    // console.log('Default txt: ', this.defaultText)
-    // console.log('False input: ', this.falseInput)
     const falseInputValue = this.falseInput.value
     if (falseInputValue.length === 0) {
-      // console.log('this.inputType: ', this.inputType)
+
       if(this.inputType === 'update') {
         document.querySelector(`[${this.selector}]`).querySelector('.list-el-value').textContent = this.defaultText
       }
       return this.destroy()
     }
     // а тут метод по созданию новой li и запрос на сервер для добавления там новой группы
-    // document.querySelector(`[data-false-input]`)
 
     const $group = setGroup({ reqType: this.inputType, value: falseInputValue, groupId: this.groupId })
     // console.log($group)

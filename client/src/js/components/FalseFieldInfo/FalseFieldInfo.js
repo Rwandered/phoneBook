@@ -1,5 +1,5 @@
-import { addPhone } from "./requests/request"
-import toUpperFistLetter from "./supporting/support"
+import { addPhone } from "../../requests/request"
+import toUpperFistLetter from "../../utils/Text/text"
 
 export default class FalseFieldInfo {
   constructor(selector) {

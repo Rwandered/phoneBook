@@ -1,5 +1,5 @@
-import Info from "./Info"
-import { getCardById } from "./requests/request"
+import Info from "../Info/Info"
+import { getCardById } from "../../requests/request"
 
 export default class Card {
   constructor(options) {

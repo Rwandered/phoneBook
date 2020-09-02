@@ -1,6 +1,6 @@
 import '../styles/scss/style.scss'
-import ListGroups from './ListGroups'
-import Description from './Description'
+import ListGroups from './components/ListGroups/ListGroups'
+import Description from './components/Description/Description'
 import { getGroups } from './requests/request'
 
 
@@ -14,7 +14,7 @@ const createListBlock = async() => {
     const list = new ListGroups({ groups: await groups(), selector: 'phoneBook__row' })
     workWithBlock(list)
   } catch (err) {
-    err => console.error("Get groups error: ", err)
+    return err => console.error("Get groups error: ", err)
   }
 }
 
@@ -36,38 +36,6 @@ const workWithBlock = element => {
   })
 }
 
-
-
-// const handler = () => {
-//   console.log('Event target: ', event.target)
-//   console.log('Block element: ', )
-// }
-
-// const menuBtn = document.querySelector('.header__menu')
-
-// menuBtn.addEventListener('click', () => {
-
-// })
-
-
-
-
-// createListBlock()
-// createInfoBlock()
-
-
-
-// const body = new Body()
-// const list = new ListGroups()
-// const info = new Info()
-
-// body.create('phoneBook__row')
-
-// list.create('phoneBook__row')
-// info.create('phoneBook__row')
-
-
-
 // 1) страница загружается - создаются основное поле по центру
 // 2) проверяется размер окна и в зависимости от размера если это мобильная 
 // версия то создается окно которое слева и которое справа только без description__row
@@ -83,34 +51,3 @@ const workWithBlock = element => {
 //  тут необходимо чтобы была активна какая-либо группа - то есть когда кликаем по группам им дается атрибут 
 // для определение активности
 //7) при клике на карточку, если это мобильная версия то показываем дополнительную инфу - вылазит справа
-
-
-
-// const cardWrapper = document.querySelector('.cards')
-
-// cards.forEach(card => {
-//   const newC = new Card(card)
-//   cardWrapper.insertAdjacentHTML('beforeend', newC.newCard)
-// })
-
-
-
-
-// <!-- Элемент блока с карточками,
-// блок самой карточки - это flex контейнер
-// в нем есть фото, имя и номер телефона пользователя-->
-// <div class="cards__card card">
-//  <!-- Элемент карточки - фото пользователя
-// отдельный блок фото будем в стилях -->
-//  <div class="card__col card__img"></div>
-//  <!-- Элемент карточки - краткие данные
-//    о пользователе -->
-//  <div class="card__col card__info">
-//    <p class="name"><strong>Kyle Simpson</strong></p>
-//    <p class="info"><strong>Austin, TX Getify Solutions</strong></p>
-//  </div>
-//  <!-- Элемент карточки - номер телефона -->
-//  <div class="card__col card__number">
-//    <p><strong>+49 176 458 4587</strong></p>
-//  </div>
-// </div>

@@ -1,6 +1,6 @@
 import './select.scss'
 
-const getHtml = (placeholder, data = [], selectedIds, multiple = false) => {
+const getHtml = (placeholder, data = [], selectedIds, multiple = false, fieldValue) => {
   let text = placeholder || 'Select something from list'
 
   const listItem = data.map( (elem) => {
@@ -10,20 +10,20 @@ const getHtml = (placeholder, data = [], selectedIds, multiple = false) => {
     selectedIds.forEach((id) => {
       if(elem.id.toString() === id.toString()) {
         selCls = 'selected'
-        text = elem.value
+        text = elem[fieldValue]
       }
     })
 
     if(multiple) {
       multi = `tabIndex= '0'`
     }
-    return `<li class="select__list_item ${selCls}" ${multi} data-type="item" data-id="${elem.id}">${elem.value}</li>`
+    return `<li class="select__list_item ${selCls}" ${multi} data-type="item" data-id="${elem.id}">${elem[fieldValue]}</li>`
   }).join('')
 
   return `
     <div class="select__backdrop" data-type="back"></div>
     <div class="select__input" data-type="input">
-      <span data-type="text">${text}</span>
+      <div class="select__input_text" data-type="text">${text}</div>
       <i class="fa fa-chevron-down" data-type="arrow"></i>
     </div>
     <div class="select__dropdown">
@@ -47,9 +47,10 @@ export class Select {
   }
 
   render() {
-    const { placeHolder, data, multiple} = this.options
+    const { placeHolder, data, multiple, fieldValue = 'value'} = this.options
+    this.fieldValue = fieldValue
     this.selectorDom.classList.add('select')
-    this.selectorDom.insertAdjacentHTML('afterbegin', getHtml(placeHolder, data, this.selectedIds, multiple))
+    this.selectorDom.insertAdjacentHTML('afterbegin', getHtml(placeHolder, data, this.selectedIds, multiple, fieldValue))
   }
 
   addSetUp() {
@@ -67,7 +68,6 @@ export class Select {
   }
 
   addHandlerClick (event) {
-    console.log('event.target: ', event.target)
     const { type } = event.target.dataset
     switch (type) {
       case 'input':
@@ -119,7 +119,7 @@ export class Select {
     }
     this.selectedIds.push(id)
 
-    const value = this.current.map(e =>  e.value ).join(' ')
+    const value = this.current.map(e =>  e[this.fieldValue ] ).join(', ')
     const selectedItem = this.selectorDom.querySelector(`[data-id="${id}"]`)
 
 

@@ -1,7 +1,8 @@
-import { getCards, getCardByGroup, deleteGroup } from "./requests/request"
-import Card from "./Card"
-import FalseInput from "./FalseInput"
-import modalComponent from "./components/modalComponent"
+import { getCards, getCardByGroup, deleteGroup } from "../../requests/request"
+import Card from "../Card/Card"
+import FalseInput from "../FalseInput/FalseInput"
+import CEatingModal from "../Modal/CreatingModal/CreatingModal"
+
 
 export default class ListGroups {
   constructor({ groups, selector }) {
@@ -65,8 +66,7 @@ export default class ListGroups {
           new FalseInput({ selector: 'data-false-input', defaultText: 'New group' })
 
       } else if (event.target.closest('[data-setting]')) {
-
-          modalComponent()
+          CEatingModal()
 
       } else if (event.target.closest('[data-edit]')) {
           // получаем все элементы с корзиной, показывыаем их , скрываем кнопку с data edit и показываем кнопку data edit stop

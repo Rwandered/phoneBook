@@ -1,6 +1,6 @@
-import FalseFieldInfo from "./FalseFieldInfo"
-import toUpperFistLetter from "./supporting/support"
-import editModal from "./components/EditModal/EditModal"
+import FalseFieldInfo from "../FalseFieldInfo/FalseFieldInfo"
+import toUpperFistLetter from "../../utils/Text/text"
+import editingModal from "../Modal/EditingModal/EditingModal"
 
 export default class Info {
   constructor(options) {
@@ -73,7 +73,7 @@ const handler = options => {
     }
   } else if (event.target.dataset.editCard) {
     console.log('Editing card... open modal')
-    editModal(options)
+    editingModal(options)
   }
 }
 

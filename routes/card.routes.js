@@ -99,7 +99,7 @@ router.post('/logo', upload.single('logo'), (req, res) => {
 })
 
 const getGroupId = groupName => groupName.map( group => $.groups.find( $group => $group.name === group).id)
- const getCardMaxId = () => $.cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
+const getCardMaxId = () => $.cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
 
 
 
