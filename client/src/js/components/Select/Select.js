@@ -1,21 +1,14 @@
 import {getGroups} from "../../requests/request";
 import {Select} from "../../utils/Select/select";
 
-const getSelect = async () => {
-  const allGroups = await getGroups()
+const getSelect = async (selectValues) => {
+  const allGroups =  await getGroups()
+  const defaultValue = selectValues && allGroups.data
+    .filter( group => selectValues.includes(group.id))
+    .map( group => group.name )
+    .join(', ')
 
-  console.log('data: ', allGroups)
-  //
-  // const options = allGroups.data
-  //   .map( group => {
-  //     return `<option value="${group.name}">${group.name}</option>`
-  //   })
-  //   .join( ' ')
-  //
-  // document.querySelector(`.${selector}`)
-  //   .insertAdjacentHTML('beforeend', options)
-
-  const select = new Select('#select', {
+  return new Select('#select', {
     placeHolder: 'Select something',
     selectedId: 1,
     data: allGroups.data,
@@ -24,6 +17,7 @@ const getSelect = async () => {
       console.log('Selected item: ', item)
     },
     multiple: true,
+    defaultValue: selectValues && defaultValue
   })
 
 }

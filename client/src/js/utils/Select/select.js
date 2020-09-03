@@ -1,6 +1,6 @@
 import './select.scss'
 
-const getHtml = (placeholder, data = [], selectedIds, multiple = false, fieldValue) => {
+const getHtml = (placeholder, data = [], selectedIds, multiple = false, fieldValue, defaultText) => {
   let text = placeholder || 'Select something from list'
 
   const listItem = data.map( (elem) => {
@@ -23,7 +23,7 @@ const getHtml = (placeholder, data = [], selectedIds, multiple = false, fieldVal
   return `
     <div class="select__backdrop" data-type="back"></div>
     <div class="select__input" data-type="input">
-      <div class="select__input_text" data-type="text">${text}</div>
+      <div class="select__input_text" data-type="text">${ defaultText || text}</div>
       <i class="fa fa-chevron-down" data-type="arrow"></i>
     </div>
     <div class="select__dropdown">
@@ -47,10 +47,10 @@ export class Select {
   }
 
   render() {
-    const { placeHolder, data, multiple, fieldValue = 'value'} = this.options
+    const { placeHolder, data, multiple, fieldValue = 'value', defaultValue } = this.options
     this.fieldValue = fieldValue
     this.selectorDom.classList.add('select')
-    this.selectorDom.insertAdjacentHTML('afterbegin', getHtml(placeHolder, data, this.selectedIds, multiple, fieldValue))
+    this.selectorDom.insertAdjacentHTML('afterbegin', getHtml(placeHolder, data, this.selectedIds, multiple, fieldValue, defaultValue))
   }
 
   addSetUp() {

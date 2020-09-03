@@ -4,11 +4,8 @@ import editingModal from "../Modal/EditingModal/EditingModal"
 
 export default class Info {
   constructor(options) {
-
-    console.log(options)
     this.id = options.id
     this.options = options
-    this.infoWrapper
     this.create()
 
   }
@@ -20,7 +17,7 @@ export default class Info {
     this.infoWrapper.dataset.id = this.id
     this.infoWrapper.insertAdjacentHTML('beforeend', this.toHtml())
 
-    this.infoWrapper.addEventListener('click', () => handler(this.options) )
+    this.infoWrapper.addEventListener('click', (event) => handler(event, this.options) )
     document.querySelector('.phoneBook__description').insertAdjacentElement('beforeend', this.infoWrapper)
   }
 
@@ -64,16 +61,13 @@ export default class Info {
 }
 
 
-const handler = options => {
-  console.log('Данные для модалки: ',options)
+const handler = (event, options) => {
   if (event.target.dataset.newPhoneField) {
-
     if (document.querySelector('.false__field__wrapper').dataset.active) {
       const falseFieldInfo = new FalseFieldInfo()
     }
   } else if (event.target.dataset.editCard) {
-    console.log('Editing card... open modal')
-    editingModal(options)
+      editingModal(options)
   }
 }
 

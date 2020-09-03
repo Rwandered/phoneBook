@@ -4,7 +4,7 @@ import { renderCard } from "../../ListGroups/ListGroups"
 import getSelect from "../../Select/Select";
 import {_getFormData, formBody} from "../../../utils/Form/form";
 
-export default function CEatingModal() {
+export default function CreatingModal() {
 
   const modalWindow = new Modal({
     title: 'Create card',
@@ -26,7 +26,6 @@ export default function CEatingModal() {
                 renderCard(cards.data)
               }
             }
-
           })
       }
     },

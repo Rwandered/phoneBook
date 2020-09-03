@@ -3,11 +3,8 @@ import ListGroups from './components/ListGroups/ListGroups'
 import Description from './components/Description/Description'
 import { getGroups } from './requests/request'
 
-
-
 const groups = async () => await getGroups()
 const description = new Description('phoneBook__row')
-
 
 const createListBlock = async() => {
   try {

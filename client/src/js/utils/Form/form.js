@@ -3,10 +3,22 @@ import {setCardLogo} from "../../requests/request";
 
 export const _getFormData = () => {
   const frm = document.querySelector('.form__flex__row')
-  return new FormData(frm)
+  console.log('frm.elements: ', frm.elements);
+  const gpValue = frm.querySelector('.select__input_text').textContent
+  const formData = new FormData(frm)
+  formData.set("groups", gpValue)
+
+  return formData
 }
 
-const _getSliderItems = () => {
+const _getSliderItems = (params) => {
+  console.log('params: ', params)
+  const paramsLength = params && Object.keys(params).length + params.numbers.length - 1
+  const slideCounts = Math.ceil(paramsLength / 4)
+  console.log('slideCounts: ', slideCounts)
+  console.log('paramsLength: ', paramsLength)
+
+
   return [`
             <div class="phone__column">
              <label for="firstName">First name</label>
@@ -28,7 +40,7 @@ const _getSliderItems = () => {
               <input class="phone__txt_field" type="text" name="info">
             </div>` ,
 
-    `<div class="phone__column ">
+  `        <div class="phone__column ">
              <label for="mobile">Mobile phone</label>
              <input class="phone__txt_field" type="text" name="mobile">
             </div>
@@ -45,7 +57,8 @@ const _getSliderItems = () => {
   ]
 }
 
-export const formBody = () => {
+export const formBody = (options) => {
+  console.log('options: ', options)
   const form = document.createElement('form')
   form.classList.add('form__flex__row')
   form.enctype = 'multipart/form-data'
@@ -62,9 +75,17 @@ export const formBody = () => {
   sliderContainer.classList.add('form__column', 'phone', 'phone__row')
 
 
+  const params = options && {
+    firstName: options.firstName,
+    lastName: options.lastName,
+    img: options.img,
+    info: options.info,
+    numbers: options.numbers,
+  }
+
   const slider = new Slider({
     selector: 'phone',
-    sliderItems: _getSliderItems(),
+    sliderItems: _getSliderItems(params),
     indicator: true,
   })
 
@@ -73,7 +94,6 @@ export const formBody = () => {
   form.insertAdjacentElement('beforeend', sliderContainer)
 
   const logoCardInput = form.querySelector('[data-card-logo]')
-  console.log('logoCardInput: ', logoCardInput)
 
   logoCardInput.addEventListener('change', () => {
     setCardLogo(_getFormData()) //отравим запрос на сервер, чтобы сохранить выбранную картинку фото и сразу же ее отобразить

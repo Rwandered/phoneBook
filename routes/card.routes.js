@@ -47,9 +47,12 @@ router.get('/', (req, res) => {
 //добавляет новый номер в карточку позже нужно будет сделать универсальный метод для изменения карточки
 router.put('/', (req, res) => {
   const { id, data } = req.body
-  console.log('ID: ', id)
+  console.log('ID: ', typeof id)
   console.log('Data: ', data)
-  const card = cards.find(card => card.id === id)
+  console.log('cards: ', cards)
+
+  const card = cards.find(card => card.id.toString() === id.toString())
+  console.log('card: ', card)
 
   console.log(card.number)
   card.numbers.push({
@@ -63,9 +66,10 @@ router.put('/', (req, res) => {
 //создание новой картчоки
 
 router.post('/', upload.single('logo'), (req, res) => {
-  console.log('Req body: ',req.body)
-  const { firstName, lastName, group = 'All Contacts', info = '', mobile, home = '', work = '' } = req.body
-  const groupIdArray = getGroupId(group)
+  console.log('Req body: ', req.body)
+  const { firstName, lastName, groups = ['All Contacts'], info = '', mobile, home = '', work = '' } = req.body
+  console.log('GROUPS: ', groups.split(','))
+  const groupIdArray = getGroupId(groups.split(','))
   const nextId = getCardMaxId() + 1
 
   const newCard = {
@@ -98,7 +102,7 @@ router.post('/logo', upload.single('logo'), (req, res) => {
   res.status(400)
 })
 
-const getGroupId = groupName => groupName.map( group => $.groups.find( $group => $group.name === group).id)
+const getGroupId = groupName => groupName.map( group => $.groups.find( $group => $group.name.trim() === group.trim()).id)
 const getCardMaxId = () => $.cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
 
 
