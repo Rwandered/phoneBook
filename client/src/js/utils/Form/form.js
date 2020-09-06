@@ -1,5 +1,17 @@
 import Slider from "../Slider/Slider";
 import {setCardLogo} from "../../requests/request";
+import {_getSliderItems} from "../WithSlider/withSlider";
+
+const getHtml = () => {
+  return `
+  <div class="form__column form__logo logo logo__row">
+   <div class="logo__img"></div>
+   <div class="insert__img">
+    <input class="phone__img_field" type="file" name="logo" style="opacity:0" data-card-logo>
+   </div>
+  </div>`
+}
+
 
 export const _getFormData = () => {
   const frm = document.querySelector('.form__flex__row')
@@ -11,81 +23,20 @@ export const _getFormData = () => {
   return formData
 }
 
-const _getSliderItems = (params) => {
-  console.log('params: ', params)
-  const paramsLength = params && Object.keys(params).length + params.numbers.length - 1
-  const slideCounts = Math.ceil(paramsLength / 4)
-  console.log('slideCounts: ', slideCounts)
-  console.log('paramsLength: ', paramsLength)
-
-
-  return [`
-            <div class="phone__column">
-             <label for="firstName">First name</label>
-             <input class="phone__txt_field" type="text" name="firstName" required>
-            </div>
-
-            <div class="phone__column">
-             <label for="lastName">Last name</label>
-             <input class="phone__txt_field" type="text" name="lastName" required>
-            </div>
-
-            <div class="phone__column">
-                <label for="group">Group</label>
-                <div id="select"></div>
-            </div>
-
-            <div class=" phone__column ">
-              <label for="info">Some information</label>
-              <input class="phone__txt_field" type="text" name="info">
-            </div>` ,
-
-  `        <div class="phone__column ">
-             <label for="mobile">Mobile phone</label>
-             <input class="phone__txt_field" type="text" name="mobile">
-            </div>
-
-            <div class="phone__column ">
-             <label for="home">Home phone</label>
-             <input class="phone__txt_field" type="text" name="home">
-            </div>
-
-            <div class="phone__column ">
-             <label for="work">Work phone</label>
-             <input class="phone__txt_field" type="text" name="work">
-            </div>`
-  ]
-}
-
 export const formBody = (options) => {
-  console.log('options: ', options)
   const form = document.createElement('form')
   form.classList.add('form__flex__row')
   form.enctype = 'multipart/form-data'
 
-  form.insertAdjacentHTML('beforeend', `
-  <div class="form__column form__logo logo logo__row">
-   <div class="logo__img"></div>
-   <div class="insert__img">
-    <input class="phone__img_field" type="file" name="logo" style="opacity:0" data-card-logo>
-   </div>
-  </div>`)
+  form.insertAdjacentHTML('beforeend', getHtml())
 
   const sliderContainer = document.createElement('div')
   sliderContainer.classList.add('form__column', 'phone', 'phone__row')
 
 
-  const params = options && {
-    firstName: options.firstName,
-    lastName: options.lastName,
-    img: options.img,
-    info: options.info,
-    numbers: options.numbers,
-  }
-
   const slider = new Slider({
     selector: 'phone',
-    sliderItems: _getSliderItems(params),
+    sliderItems: _getSliderItems(options),
     indicator: true,
   })
 
