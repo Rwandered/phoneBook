@@ -1,6 +1,7 @@
 import FalseFieldInfo from "../FalseFieldInfo/FalseFieldInfo"
 import toUpperFistLetter from "../../utils/Text/text"
 import editingModal from "../Modal/EditingModal/EditingModal"
+import {getCardById} from "../../requests/request";
 
 export default class Info {
   constructor(options) {
@@ -61,13 +62,15 @@ export default class Info {
 }
 
 
-const handler = (event, options) => {
+const handler = async (event, options) => {
   if (event.target.dataset.newPhoneField) {
     if (document.querySelector('.false__field__wrapper').dataset.active) {
-      const falseFieldInfo = new FalseFieldInfo()
+      new FalseFieldInfo()
     }
   } else if (event.target.dataset.editCard) {
-      editingModal(options)
+    // тут сделаем запрос за актуальными данными
+    const { data } = await getCardById(options.id)
+    editingModal(data)
   }
 }
 

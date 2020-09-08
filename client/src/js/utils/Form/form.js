@@ -2,10 +2,11 @@ import Slider from "../Slider/Slider";
 import {setCardLogo} from "../../requests/request";
 import {_getSliderItems} from "../WithSlider/withSlider";
 
-const getHtml = () => {
+const getHtml = (option) => {
   return `
   <div class="form__column form__logo logo logo__row">
-   <div class="logo__img"></div>
+   <div class="logo__img" style="background: url('${option && option.img || 'no-photo.png'}') 50%/100% no-repeat;"></div>
+   
    <div class="insert__img">
     <input class="phone__img_field" type="file" name="logo" style="opacity:0" data-card-logo>
    </div>
@@ -15,7 +16,6 @@ const getHtml = () => {
 
 export const _getFormData = () => {
   const frm = document.querySelector('.form__flex__row')
-  console.log('frm.elements: ', frm.elements);
   const gpValue = frm.querySelector('.select__input_text').textContent
   const formData = new FormData(frm)
   formData.set("groups", gpValue)
@@ -28,7 +28,7 @@ export const formBody = (options) => {
   form.classList.add('form__flex__row')
   form.enctype = 'multipart/form-data'
 
-  form.insertAdjacentHTML('beforeend', getHtml())
+  form.insertAdjacentHTML('beforeend', getHtml(options))
 
   const sliderContainer = document.createElement('div')
   sliderContainer.classList.add('form__column', 'phone', 'phone__row')

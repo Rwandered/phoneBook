@@ -46,7 +46,6 @@ export default class Modal {
   }
 
   close() {
-    console.log(this.modal)
     //на самом деле тут надо будет скрывать модалку через анимацию и потом удалять ее в settimeout
     this.modal.remove()
   }

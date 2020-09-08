@@ -63,8 +63,10 @@ router.put('/', (req, res) => {
   res.json({ message: 'Ok' })
 })
 
-//создание новой картчоки
 
+
+
+//создание новой картчоки
 router.post('/', upload.single('logo'), (req, res) => {
   console.log('Req body: ', req.body)
   const { firstName, lastName, groups = ['All Contacts'], info = '', mobile, home = '', work = '' } = req.body
@@ -101,6 +103,38 @@ router.post('/logo', upload.single('logo'), (req, res) => {
   }
   res.status(400)
 })
+
+
+router.patch('/', upload.single('logo'), (req, res) => {
+  console.log('Req body: ', req.body)
+  console.log('Req file: ', req.file)
+  // const { firstName, lastName, groups = ['All Contacts'], info = '', mobile, home = '', work = '' } = req.body
+  // console.log('GROUPS: ', groups.split(','))
+  // const groupIdArray = getGroupId(groups.split(','))
+  // const nextId = getCardMaxId() + 1
+  //
+  // const newCard = {
+  //   id: nextId,
+  //   img: 'no-photo.png',
+  //   firstName,
+  //   lastName,
+  //   info,
+  //   numbers: [
+  //     { type: 'mobile', number: mobile },
+  //     { type: 'work', number: work },
+  //     { type: 'home', number: home }
+  //   ],
+  //   groups: groupIdArray
+  // }
+  //
+  // if (req.file) {
+  //   newCard.img = req.file.filename
+  // }
+  // cards.push(newCard)
+  // res.json({ card: newCard })
+})
+
+
 
 const getGroupId = groupName => groupName.map( group => $.groups.find( $group => $group.name.trim() === group.trim()).id)
 const getCardMaxId = () => $.cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id

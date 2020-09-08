@@ -14,7 +14,6 @@ const getSelect = async (selectValues) => {
     data: allGroups.data,
     fieldValue: 'name',
     onSelect(item) { // некий callback - который вызывается после того как элемент выбран
-      console.log('Selected item: ', item)
     },
     multiple: true,
     defaultValue: selectValues && defaultValue

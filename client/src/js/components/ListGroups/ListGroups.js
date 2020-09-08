@@ -169,7 +169,6 @@ const toHtml = list => {
 }
 
 const toLi = groupsList => {
-  console.log('groupsList: ', groupsList)
   const $groupsList = groupsList
     .filter(group => group.name != 'All Contacts')
     .map(group => `

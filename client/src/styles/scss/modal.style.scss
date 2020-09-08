@@ -316,6 +316,10 @@
     .slider__item {
         transform: translateX(0%)!important;
     }
+    .slider {
+        overflow-y: scroll;
+        height: 500px;
+    }
 }
 
 @media (min-width: 768px) {}

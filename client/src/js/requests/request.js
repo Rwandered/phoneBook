@@ -3,7 +3,6 @@ import { PORT, ADDRESS } from "../constants/constants"
 export const setCard = async options => {
   try {
 
-    console.log('Set card:', options)
     const response = await fetch(`http${ADDRESS}${PORT}/card`, {
       method: 'POST',
       body: options
@@ -11,6 +10,20 @@ export const setCard = async options => {
     return response.json()
   } catch (e) {}
 }
+
+export const updateCard = async options => {
+  console.log('updateCard data: ', options)
+  try {
+
+    const response = await fetch(`http${ADDRESS}${PORT}/card`, {
+      method: 'PATCH',
+      body: options
+    })
+    return response.json()
+  } catch (e) {}
+}
+
+
 
 export const getCards = async() => {
   try {
@@ -39,7 +52,6 @@ export const getCardByGroup = async group => {
 export const setCardLogo = async options => {
   try {
 
-    console.log('Set card:', options)
     const response = await fetch(`http${ADDRESS}${PORT}/card/logo`, {
       method: 'POST',
       body: options
@@ -79,7 +91,6 @@ export const deleteGroup = async groupId => {
       },
       body: JSON.stringify({ groupId })
     })
-    console.log(response)
   } catch (e) {}
 }
 
