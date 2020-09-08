@@ -14,11 +14,12 @@ const getHtml = (option) => {
 }
 
 
-export const _getFormData = () => {
+export const _getFormData = (...cardId) => {
   const frm = document.querySelector('.form__flex__row')
   const gpValue = frm.querySelector('.select__input_text').textContent
   const formData = new FormData(frm)
-  formData.set("groups", gpValue)
+  formData.set('groups', gpValue)
+  cardId && formData.set('id', cardId)
 
   return formData
 }

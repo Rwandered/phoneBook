@@ -13,7 +13,7 @@ const editingModal = options => {
       type: 'ok',
       handler() {
         console.log('Save editing')
-        updateCard( _getFormData() )
+        updateCard( _getFormData(options.id) )
       }
     },
       {

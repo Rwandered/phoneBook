@@ -108,30 +108,45 @@ router.post('/logo', upload.single('logo'), (req, res) => {
 router.patch('/', upload.single('logo'), (req, res) => {
   console.log('Req body: ', req.body)
   console.log('Req file: ', req.file)
-  // const { firstName, lastName, groups = ['All Contacts'], info = '', mobile, home = '', work = '' } = req.body
-  // console.log('GROUPS: ', groups.split(','))
-  // const groupIdArray = getGroupId(groups.split(','))
-  // const nextId = getCardMaxId() + 1
+  const {id, firstName, lastName, groups = ['All Contacts'], info = '', ...numbers } = req.body
+  const groupIdArray = getGroupId(groups.split(','))
+  console.log('groupIdArray: ', groupIdArray)
+  console.log('$.cards: ', $.cards)
+  const updatableCard = $.cards.find(card => card.id.toString() === id.toString())
+  console.log('updatableCard: ', updatableCard)
+
+  const updateNumbers = Object.keys(numbers).map( numberKey => {
+    return { type: `${numberKey}`, number: numbers[numberKey] }
+  })
+
+
+
   //
-  // const newCard = {
-  //   id: nextId,
-  //   img: 'no-photo.png',
-  //   firstName,
-  //   lastName,
-  //   info,
-  //   numbers: [
-  //     { type: 'mobile', number: mobile },
-  //     { type: 'work', number: work },
-  //     { type: 'home', number: home }
-  //   ],
-  //   groups: groupIdArray
-  // }
-  //
-  // if (req.file) {
-  //   newCard.img = req.file.filename
-  // }
+  const updatedCard  = {
+    firstName,
+    lastName,
+    info,
+    numbers: updateNumbers,
+    groups: groupIdArray
+  }
+
+  if (req.file) {
+    updatedCard.img = req.file.filename
+  }
+
+  Object.keys(updatableCard).forEach( cardElemKey => {
+    if(updatedCard[cardElemKey]) {
+      updatableCard[cardElemKey] = updatedCard[cardElemKey]
+    }
+  })
+
   // cards.push(newCard)
   // res.json({ card: newCard })
+  console.log('updatedCard: ', updatedCard)
+
+
+
+  console.log('$.cards: ', $.cards)
 })
 
 
