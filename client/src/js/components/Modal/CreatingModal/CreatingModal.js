@@ -1,5 +1,5 @@
 import Modal from "../Modal"
-import {setCard, getCards, getCardByGroup } from "../../../requests/request"
+import {setCard, getCards, getCardByGroup, getGroupsValueById} from "../../../requests/request"
 import { renderCard } from "../../ListGroups/ListGroups"
 import getSelect from "../../Select/Select";
 import {_getFormData, formBody} from "../../../utils/Form/form";
@@ -17,9 +17,12 @@ export default function CreatingModal() {
           .then(async res => {
             const activeGroup = document.querySelector('.active_list_el')
             if (activeGroup) {
+              const groups = await getGroupsValueById(res.card.groups)
+              console.log('groups: ', groups)
               let cards
               if (activeGroup.dataset.allContact) {
                 cards = await getCards()
+
                 renderCard(cards.data)
               } else if (activeGroup.textContent === res.card.group) {
                 cards = await getCardByGroup(activeGroup.textContent)

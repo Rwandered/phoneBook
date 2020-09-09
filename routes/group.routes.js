@@ -4,6 +4,20 @@ const $ = require('../initData.js')
 const router = new Router
 
 const groups = $.groups
+const randomId = (min, max) => {
+  const rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+}
+
+const getGroupsValuesById = (ids) => {
+  console.log('ids: ', ids)
+  // const optionId = ids.split(',').map(e => +e)
+  // return groups.reduce( (acc, group) => {
+  //   optionId.includes(group.id)
+  //     ? acc = [...acc, group.name]
+  //     : acc
+  // }, [])
+}
 
 router.get('/', (req, res) => {
   res.json({ data: groups })
@@ -64,12 +78,10 @@ router.delete('/', (req, res) => {
   res.json({ message: 'Group has been deleted...' })
 })
 
-
-
-const randomId = (min, max) => {
-  const rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-}
+router.post('/ids', (req, res) => {
+  console.log('ids Body :', req.body)
+  res.json({ data: getGroupsValuesById(req.body.ids) })
+})
 
 
 module.exports = router

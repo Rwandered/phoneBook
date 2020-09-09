@@ -7,7 +7,7 @@ export const setCard = async options => {
       method: 'POST',
       body: options
     })
-    return response.json()
+    return await response.json()
   } catch (e) {}
 }
 
@@ -19,7 +19,18 @@ export const updateCard = async options => {
       method: 'PATCH',
       body: options
     })
-    return response.json()
+    return await response.json()
+  } catch (e) {}
+}
+
+export const getGroupsValueById = async (ids) => {
+  debugger
+  try {
+    const response = await fetch(`http${ADDRESS}${PORT}/group/ids`, {
+      method: 'POST',
+      body: ids
+    })
+    return await response.json()
   } catch (e) {}
 }
 
@@ -51,7 +62,6 @@ export const getCardByGroup = async group => {
 
 export const setCardLogo = async options => {
   try {
-
     const response = await fetch(`http${ADDRESS}${PORT}/card/logo`, {
       method: 'POST',
       body: options
