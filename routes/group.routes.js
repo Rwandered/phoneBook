@@ -11,12 +11,16 @@ const randomId = (min, max) => {
 
 const getGroupsValuesById = (ids) => {
   console.log('ids: ', ids)
-  // const optionId = ids.split(',').map(e => +e)
-  // return groups.reduce( (acc, group) => {
-  //   optionId.includes(group.id)
-  //     ? acc = [...acc, group.name]
-  //     : acc
-  // }, [])
+  return groups.reduce( (acc, group) => {
+    console.log('acc: ', acc)
+    console.log('group: ', group)
+    if(ids.includes(group.id)) {
+      acc = [...acc, group]
+      return acc
+    } else {
+      return  acc
+    }
+  }, [])
 }
 
 router.get('/', (req, res) => {
@@ -78,9 +82,9 @@ router.delete('/', (req, res) => {
   res.json({ message: 'Group has been deleted...' })
 })
 
-router.post('/ids', (req, res) => {
-  console.log('ids Body :', req.body)
-  res.json({ data: getGroupsValuesById(req.body.ids) })
+
+router.post('/id', (req, res) => {
+  res.json({ groups: getGroupsValuesById(req.body.ids) })
 })
 
 

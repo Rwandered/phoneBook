@@ -21,7 +21,6 @@ const upload = multer({
   storage: storage,
 })
 
-
 const cards = $.cards
 
 router.post('/card', (req, res) => {
@@ -32,7 +31,7 @@ router.post('/card', (req, res) => {
 })
 
 router.get('/:gpId', (req, res) => {
-  // console.log('Group name: ', req.params.gpName)
+  console.log('Group name: ', req.params)
   const $cards = cards.filter(card => card.groups.find(gr => gr === +req.params.gpId))
   console.log('NEED CARDS', $cards)
   res.json({ data: $cards })
@@ -119,9 +118,6 @@ router.patch('/', upload.single('logo'), (req, res) => {
     return { type: `${numberKey}`, number: numbers[numberKey] }
   })
 
-
-
-  //
   const updatedCard  = {
     firstName,
     lastName,
@@ -140,13 +136,8 @@ router.patch('/', upload.single('logo'), (req, res) => {
     }
   })
 
-  // cards.push(newCard)
-  // res.json({ card: newCard })
-  console.log('updatedCard: ', updatedCard)
-
-
-
   console.log('$.cards: ', $.cards)
+  res.json({ card: updatableCard })
 })
 
 

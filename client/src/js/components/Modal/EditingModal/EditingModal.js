@@ -2,6 +2,8 @@ import Modal from '../Modal'
 import getSelect from "../../Select/Select";
 import {_getFormData, formBody} from "../../../utils/Form/form";
 import {updateCard} from "../../../requests/request";
+import {startRender} from "../../../utils/Cards/cardsUtil";
+
 
 const editingModal = options => {
 
@@ -14,6 +16,11 @@ const editingModal = options => {
       handler() {
         console.log('Save editing')
         updateCard( _getFormData(options.id) )
+          .then( res => {
+            console.log('res :', res)
+            startRender(res)
+          })
+          .catch(error => {})
       }
     },
       {

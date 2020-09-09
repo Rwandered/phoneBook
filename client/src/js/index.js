@@ -1,7 +1,8 @@
-import '../styles/scss/style.scss'
 import ListGroups from './components/ListGroups/ListGroups'
 import Description from './components/Description/Description'
 import { getGroups } from './requests/request'
+import '../styles/scss/style.scss'
+
 
 const groups = async () => await getGroups()
 const description = new Description('phoneBook__row')

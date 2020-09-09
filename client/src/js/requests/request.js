@@ -23,12 +23,14 @@ export const updateCard = async options => {
   } catch (e) {}
 }
 
-export const getGroupsValueById = async (ids) => {
-  debugger
+export const getGroupsValueById = async (payload) => {
   try {
-    const response = await fetch(`http${ADDRESS}${PORT}/group/ids`, {
+    const response = await fetch(`http${ADDRESS}${PORT}/group/id`, {
       method: 'POST',
-      body: ids
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
     return await response.json()
   } catch (e) {}
