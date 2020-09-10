@@ -3,9 +3,9 @@ import { getCardById } from "../../requests/request"
 
 export default class Card {
   constructor(options) {
-    // this.img = options.img || 'no-photo.png'
+    this.img = options.img || 'no-photo.png'
     this.id = options.id
-    this.img = 'no-photo.png'
+    // this.img = 'no-photo.png'
     this.firstName = options.firstName
     this.lastName = options.lastName
     this.info = options.info
@@ -30,29 +30,26 @@ export default class Card {
       // его изменили, и нужно доабвить новые данные с сервера
       // console.log(getCardById(this.id))
       const cardOptions = await getCardById(this.id)
-      const infoField = new Info(cardOptions.data)
-      // console.log(infoField)
+      console.log('cardOptions: ', cardOptions)
+      new Info(cardOptions.data)
     })
     return cardWrapper
   }
 
   toHtml() {
     return `
-        <!-- Элемент карточки - фото пользователя
-        отдельный блок фото будем в стилях -->
-        <div class="card__col card__img" style="background: url('${this.img}') 50%/100% no-repeat;"></div>
-        <!-- Элемент карточки - краткие данные
-         о пользователе -->
+      <div class="card__col card__img" style="background: url('${this.img}') 50%/100% no-repeat;"></div>
         <div class="card__col card__info">
-         <p class="name"><strong>${this.firstName} ${this.lastName}</strong></p>
-         <p class="info"><strong>${this.info}</strong></p>
+          <p class="name"><strong>${this.firstName} ${this.lastName}</strong></p>
+          <p class="info"><strong>${this.info}</strong></p>
         </div>
-        <!-- Элемент     карточки - номер телефона -->
         <div class="card__col card__number">
-         <p><strong>${
-      this.numbers.find(number => number.type === 'work').number
-    }</strong></p>
-        </div>`
+        <p>
+          <strong>${
+            this.numbers.find(number => number.type === 'work').number
+          }</strong>
+        </p>
+      </div>`
   }
 
 }

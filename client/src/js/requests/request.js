@@ -56,6 +56,18 @@ export const getCardById = async id => {
   } catch (e) {}
 }
 
+export const deleteCardById = async (id) => {
+  try {
+    return await (await fetch(`http${ADDRESS}${PORT}/card/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({ id })
+    })).json()
+  } catch (e) {}
+}
+
 export const getCardByGroup = async group => {
   try {
     return await (await fetch(`http${ADDRESS}${PORT}/card/${group}`)).json()

@@ -1,8 +1,17 @@
-import {getCardByGroup, getCards, getGroupsValueById} from "../../requests/request";
-import {renderCard} from "../../components/ListGroups/ListGroups";
+import {deleteCardById, getCardByGroup, getCards, getGroupsValueById} from "../../requests/request";
+import Card from "../../components/Card/Card";
+
+export const renderCard = cardsArray => {
+  const cardWrapper = document.querySelector('.cards')
+  ;[...cardWrapper.children].forEach(e => e.remove())
+
+  for (const card of cardsArray) {
+    const newC = new Card(card)
+    cardWrapper.insertAdjacentElement('beforeend', newC.newCard())
+  }
+}
 
 const checkGroupsValue = (where, what) => {
-  debugger
   const res = where.find( elem => elem.name === what)
   return res ? {  id: res.id, isInclude: true } : {  id: '', isInclude: false  }
 }
@@ -28,4 +37,10 @@ export const startRender = async (param) => {
     }
   }
   //   тут уведомление, что все ок
+}
+
+export const deleteCard = (id) => {
+  deleteCardById(id).then( (res) => {
+    startRender(res)
+  })
 }

@@ -2,13 +2,14 @@ import FalseFieldInfo from "../FalseFieldInfo/FalseFieldInfo"
 import toUpperFistLetter from "../../utils/Text/text"
 import editingModal from "../Modal/EditingModal/EditingModal"
 import {getCardById} from "../../requests/request";
+import {deleteCard} from "../../utils/Cards/cardsUtil";
+import {removeDescription} from "../../utils/DOM/domUtil";
 
 export default class Info {
   constructor(options) {
     this.id = options.id
     this.options = options
     this.create()
-
   }
 
 
@@ -49,7 +50,6 @@ export default class Info {
         <div class="description__column description__userphoto" style="background: url('${this.options.img || 'no-photo.png'}') 50%/100% no-repeat;"></div>
         <!-- блок с номерами пользователя -->
         <div class="description__column description__userinfo">
-
         ${numberInfoContent}
         </div>
         <div class="false__field__wrapper" data-active='1'></div>
@@ -57,6 +57,7 @@ export default class Info {
          <div class="description__column description__setting">
         <div class="setting_column description__newphone" data-new-phone-field="true"></div>
         <div class="setting_column description__editcard" data-edit-card="true"></div>
+        <div class="setting_column description__delcard" data-del-card="true"></div>
       </div>`
   }
 }
@@ -71,6 +72,9 @@ const handler = async (event, options) => {
     // тут сделаем запрос за актуальными данными
     const { data } = await getCardById(options.id)
     editingModal(data)
+  } else if (event.target.dataset.delCard) {
+    deleteCard(options.id)
+    removeDescription()
   }
 }
 

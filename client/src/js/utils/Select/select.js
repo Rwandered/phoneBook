@@ -2,7 +2,7 @@ import './select.scss'
 
 const getHtml = (placeholder, data = [], selectedIds, multiple = false, fieldValue, defaultText) => {
   let text = placeholder || 'Select something from list'
-
+  console.log('selectedIds: ', selectedIds)
   const listItem = data.map( (elem) => {
     let selCls = ''
     let multi = ''
@@ -39,7 +39,7 @@ export class Select {
   constructor(selector, options) {
     this.selectorDom = document.querySelector(selector)
     this.options = options
-    this.selectedIds = [options.selectedId.toString()]
+    this.selectedIds = options.selectedId.map( elem => elem.toString())
     this.multiple = options.multiple
 
     this.render()

@@ -10,10 +10,7 @@ const randomId = (min, max) => {
 }
 
 const getGroupsValuesById = (ids) => {
-  console.log('ids: ', ids)
   return groups.reduce( (acc, group) => {
-    console.log('acc: ', acc)
-    console.log('group: ', group)
     if(ids.includes(group.id)) {
       acc = [...acc, group]
       return acc
@@ -33,27 +30,25 @@ router.post('/', (req, res) => {
   if (reqType === 'new') {
 
     const $group = { id: randomId(5, 100000), name: value, type: 'user' }
-
     const doubleGroup = groups.find(group => group.name === value)
+
     if (doubleGroup) {
       const repeatGroups = groups.filter(group => group.name.includes(value))
       $group.name = `${value}-${repeatGroups.length}`
     }
+
     groups.push($group)
     res.json({ message: 'Groups has been created...', group: $group })
 
   } else {
-
     const $group = groups.find(group => group.id === groupId)
-
     const doubleGroup = groups.find(group => group.name === value)
-    if (doubleGroup) {
 
+    if (doubleGroup) {
       if (doubleGroup.id !== groupId) {
         const repeatGroups = groups.filter(group => group.name.includes(value))
         $group.name = `${value}-${repeatGroups.length}`
       }
-
     } else {
       $group.name = value
     }
@@ -69,7 +64,6 @@ router.delete('/', (req, res) => {
       groups.splice(index, 1) // delete group from group array
 
       $.cards.forEach((card, index) => {
-
         const cardGroups = card.groups
         const $index = cardGroups.findIndex(gr => gr === groupId)
 

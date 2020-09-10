@@ -317,7 +317,7 @@
         transform: translateX(0%)!important;
     }
     .slider {
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 500px;
     }
 }

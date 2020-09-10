@@ -20,7 +20,6 @@ createListBlock()
 
 const workWithBlock = element => {
   document.querySelector('.body').addEventListener('click', () => {
-
     if (event.target.closest('[data-menu]')) {
       description.close()
       element.show()

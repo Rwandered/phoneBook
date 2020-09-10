@@ -3,6 +3,8 @@ import getSelect from "../../Select/Select";
 import {_getFormData, formBody} from "../../../utils/Form/form";
 import {updateCard} from "../../../requests/request";
 import {startRender} from "../../../utils/Cards/cardsUtil";
+import Info from "../../Info/Info";
+import {removeDescription} from "../../../utils/DOM/domUtil";
 
 
 const editingModal = options => {
@@ -16,9 +18,10 @@ const editingModal = options => {
       handler() {
         console.log('Save editing')
         updateCard( _getFormData(options.id) )
-          .then( res => {
-            console.log('res :', res)
-            startRender(res)
+          .then( async res => {
+            await startRender(res)
+            removeDescription()
+            new Info(res.card)
           })
           .catch(error => {})
       }
@@ -34,7 +37,7 @@ const editingModal = options => {
     entry: 'phoneBook',
     body: formBody(options)
   } )
-
+  console.log('options: ', options)
   getSelect(options.groups)
 }
 

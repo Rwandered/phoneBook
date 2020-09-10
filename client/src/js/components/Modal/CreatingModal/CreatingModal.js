@@ -18,7 +18,7 @@ export default function CreatingModal() {
       handler() {
         setCard(_getFormData())
           .then(async res => {
-            startRender(res)
+            await startRender(res)
           // //   тут уведомление, что все ок
           }).catch( error => {//    тут ошибка, что что-то не так
         })

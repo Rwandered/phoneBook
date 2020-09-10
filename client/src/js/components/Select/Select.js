@@ -10,7 +10,7 @@ const getSelect = async (selectValues) => {
 
   return new Select('#select', {
     placeHolder: 'Select something',
-    selectedId: 1,
+    selectedId: selectValues || [1],
     data: allGroups.data,
     fieldValue: 'name',
     onSelect(item) { // некий callback - который вызывается после того как элемент выбран

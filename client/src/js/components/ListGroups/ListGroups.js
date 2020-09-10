@@ -1,7 +1,7 @@
 import { getCards, getCardByGroup, deleteGroup } from "../../requests/request"
-import Card from "../Card/Card"
 import FalseInput from "../FalseInput/FalseInput"
-import CEatingModal from "../Modal/CreatingModal/CreatingModal"
+import CreatingModal from "../Modal/CreatingModal/CreatingModal"
+import {renderCard} from "../../utils/Cards/cardsUtil";
 
 
 export default class ListGroups {
@@ -24,7 +24,8 @@ export default class ListGroups {
         if (!document.querySelector('.inp_new_group')) {
           const groupForRename = event.target.closest('[data-list-el]')
           const $groupForRename = groupForRename.querySelector('.list-el-value')
-          this.updateInput = new FalseInput({
+
+          new FalseInput({
             selector: `data-group-id='${groupForRename.dataset.groupId}'`,
             defaultText: $groupForRename.textContent,
             inputType: 'update',
@@ -66,7 +67,7 @@ export default class ListGroups {
           new FalseInput({ selector: 'data-false-input', defaultText: 'New group' })
 
       } else if (event.target.closest('[data-setting]')) {
-          CEatingModal()
+        CreatingModal()
 
       } else if (event.target.closest('[data-edit]')) {
           // получаем все элементы с корзиной, показывыаем их , скрываем кнопку с data edit и показываем кнопку data edit stop
@@ -132,16 +133,7 @@ export default class ListGroups {
   }
 }
 
-export const renderCard = cardsArray => {
 
-  const cardWrapper = document.querySelector('.cards')
-  const r = [...cardWrapper.children].forEach(e => e.remove())
-
-  for (const card of cardsArray) {
-    const newC = new Card(card)
-    cardWrapper.insertAdjacentElement('beforeend', newC.newCard())
-  }
-}
 
 const toHtml = list => {
   return `<div class="groups__row">

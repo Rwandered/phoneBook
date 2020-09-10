@@ -440,7 +440,21 @@
       width: 50px;
       height: 50px;
   }
-  
+
+  .description__delcard {
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    // margin: 0 0 10px 0;
+    background: url('../../img/del-card.png') 50%no-repeat;
+    border-radius: 50%;
+    // align-self: center;
+    // flex: 0 0 auto;
+    display: inline-block;
+    // background: url('../../img/info16.png') 50%no-repeat;
+    width: 50px;
+    height: 50px;
+  }
+
   // стили модального окна
   @import './modal.style.scss';
 

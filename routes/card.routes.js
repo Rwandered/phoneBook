@@ -21,44 +21,33 @@ const upload = multer({
   storage: storage,
 })
 
-const cards = $.cards
+let cards = $.cards
+const groups = $.groups
 
 router.post('/card', (req, res) => {
-  console.log('Body : ', req.body.id)
   const $card = cards.find(card => card.id === req.body.id)
-  // console.log('NEED CARDS', $card)
   res.json({ data: $card })
 })
 
 router.get('/:gpId', (req, res) => {
-  console.log('Group name: ', req.params)
   const $cards = cards.filter(card => card.groups.find(gr => gr === +req.params.gpId))
-  console.log('NEED CARDS', $cards)
   res.json({ data: $cards })
 })
 
 router.get('/', (req, res) => {
-  // console.log('All card')
-  res.json({ data: cards })
+   res.json({ data: cards })
 })
 
 
 //добавляет новый номер в карточку позже нужно будет сделать универсальный метод для изменения карточки
 router.put('/', (req, res) => {
   const { id, data } = req.body
-  console.log('ID: ', typeof id)
-  console.log('Data: ', data)
-  console.log('cards: ', cards)
-
   const card = cards.find(card => card.id.toString() === id.toString())
-  console.log('card: ', card)
-
-  console.log(card.number)
   card.numbers.push({
     type: data.type,
     number: data.number
   })
-  console.log(cards)
+
   res.json({ message: 'Ok' })
 })
 
@@ -67,12 +56,10 @@ router.put('/', (req, res) => {
 
 //создание новой картчоки
 router.post('/', upload.single('logo'), (req, res) => {
-  console.log('Req body: ', req.body)
   const { firstName, lastName, groups = ['All Contacts'], info = '', mobile, home = '', work = '' } = req.body
-  console.log('GROUPS: ', groups.split(','))
   const groupIdArray = getGroupId(groups.split(','))
   const nextId = getCardMaxId() + 1
-
+  console.log('nextId: ', nextId)
   const newCard = {
     id: nextId,
     img: 'no-photo.png',
@@ -94,8 +81,8 @@ router.post('/', upload.single('logo'), (req, res) => {
   res.json({ card: newCard })
 })
 
+
 router.post('/logo', upload.single('logo'), (req, res) => {
-  console.log('Logo: ', req.file)
   if (req.file) {
     const logo = req.file.filename
     return res.json( { logo })
@@ -105,14 +92,9 @@ router.post('/logo', upload.single('logo'), (req, res) => {
 
 
 router.patch('/', upload.single('logo'), (req, res) => {
-  console.log('Req body: ', req.body)
-  console.log('Req file: ', req.file)
   const {id, firstName, lastName, groups = ['All Contacts'], info = '', ...numbers } = req.body
   const groupIdArray = getGroupId(groups.split(','))
-  console.log('groupIdArray: ', groupIdArray)
-  console.log('$.cards: ', $.cards)
   const updatableCard = $.cards.find(card => card.id.toString() === id.toString())
-  console.log('updatableCard: ', updatableCard)
 
   const updateNumbers = Object.keys(numbers).map( numberKey => {
     return { type: `${numberKey}`, number: numbers[numberKey] }
@@ -126,9 +108,7 @@ router.patch('/', upload.single('logo'), (req, res) => {
     groups: groupIdArray
   }
 
-  if (req.file) {
-    updatedCard.img = req.file.filename
-  }
+  if (req.file) { updatedCard.img = req.file.filename }
 
   Object.keys(updatableCard).forEach( cardElemKey => {
     if(updatedCard[cardElemKey]) {
@@ -136,14 +116,22 @@ router.patch('/', upload.single('logo'), (req, res) => {
     }
   })
 
-  console.log('$.cards: ', $.cards)
   res.json({ card: updatableCard })
+})
+
+router.delete('/', (req, res) => {
+  const { id } = req.body
+  const deletedCard = cards.find( card => card.id === id)
+  cards = cards.filter( card => card.id !== id)
+  res.json({ message: 'Card has been deleted...', card: deletedCard })
 })
 
 
 
-const getGroupId = groupName => groupName.map( group => $.groups.find( $group => $group.name.trim() === group.trim()).id)
-const getCardMaxId = () => $.cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
+const getGroupId = groupName => groupName.map( group => groups.find( $group => $group.name.trim() === group.trim()).id)
+const getCardMaxId = () => (cards.length
+    ? cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
+    : 0)
 
 
 
