@@ -1,4 +1,4 @@
-import {deleteCardById, getCardByGroup, getCards, getGroupsValueById} from "../../requests/request";
+import {deleteCardById, getCardByGroup, getCards, getGroups, getGroupsValueById} from "../../requests/request";
 import Card from "../../components/Card/Card";
 
 export const renderCard = cardsArray => {
@@ -16,7 +16,15 @@ const checkGroupsValue = (where, what) => {
   return res ? {  id: res.id, isInclude: true } : {  id: '', isInclude: false  }
 }
 
+const getCurrentGroupId = async (groupName) => {
+
+  const {data} = await getGroups()
+  const currentGroup = data.find( group => group.name === groupName)
+  return currentGroup
+}
+
 export const startRender = async (param) => {
+
   const activeGroup = document.querySelector('.active_list_el')
   if (activeGroup) {
     let cards
@@ -27,13 +35,13 @@ export const startRender = async (param) => {
       return renderCard(cards.data)
 
     } else {
-      const {isInclude, id} = checkGroupsValue(groups, activeGroup.textContent.trim())
-
-      if(isInclude) {
+      // const {isInclude, id} = checkGroupsValue(groups, activeGroup.textContent.trim())
+      const {id} = await getCurrentGroupId(activeGroup.textContent.trim())
+      // if(isInclude) {
         cards = await getCardByGroup(id)
         return renderCard(cards.data)
-      }
-      return null
+      // }
+      // return null
     }
   }
   //   тут уведомление, что все ок

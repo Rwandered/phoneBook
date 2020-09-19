@@ -19,6 +19,7 @@ const editingModal = options => {
         console.log('Save editing')
         updateCard( _getFormData(options.id) )
           .then( async res => {
+            console.log('RES: ', res )
             await startRender(res)
             removeDescription()
             new Info(res.card)

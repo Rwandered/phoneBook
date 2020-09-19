@@ -4,6 +4,7 @@ import editingModal from "../Modal/EditingModal/EditingModal"
 import {getCardById} from "../../requests/request";
 import {deleteCard} from "../../utils/Cards/cardsUtil";
 import {removeDescription} from "../../utils/DOM/domUtil";
+import Loader from "../Loader/Loader";
 
 export default class Info {
   constructor(options) {
@@ -73,7 +74,9 @@ const handler = async (event, options) => {
     const { data } = await getCardById(options.id)
     editingModal(data)
   } else if (event.target.dataset.delCard) {
+    const loader = new Loader('.cards')
     deleteCard(options.id)
+    loader.hide()
     removeDescription()
   }
 }

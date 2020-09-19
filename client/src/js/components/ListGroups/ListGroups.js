@@ -2,6 +2,7 @@ import { getCards, getCardByGroup, deleteGroup } from "../../requests/request"
 import FalseInput from "../FalseInput/FalseInput"
 import CreatingModal from "../Modal/CreatingModal/CreatingModal"
 import {renderCard} from "../../utils/Cards/cardsUtil";
+import Loader from "../Loader/Loader";
 
 
 export default class ListGroups {
@@ -58,8 +59,11 @@ export default class ListGroups {
           event.target.closest('[data-list-el]').classList.add('active_list_el')
 
           document.querySelector('[data-gpname]').textContent = event.target.textContent
+
+          const loader = new Loader('.cards')
           const cards = !!listElem.dataset.allContact ? await getCards() : await getCardByGroup(listElem.dataset.groupId)
-          // getCardByGroup - принимает id группы
+
+          cards && loader.hide()
           renderCard(cards.data)
           this.close()
       } else if (event.target.closest('[data-new-group]')) {

@@ -52,8 +52,6 @@ router.put('/', (req, res) => {
 })
 
 
-
-
 //создание новой картчоки
 router.post('/', upload.single('logo'), (req, res) => {
   const { firstName, lastName, groups = ['All Contacts'], info = '', mobile, home = '', work = '' } = req.body
@@ -94,7 +92,7 @@ router.post('/logo', upload.single('logo'), (req, res) => {
 router.patch('/', upload.single('logo'), (req, res) => {
   const {id, firstName, lastName, groups = ['All Contacts'], info = '', ...numbers } = req.body
   const groupIdArray = getGroupId(groups.split(','))
-  const updatableCard = $.cards.find(card => card.id.toString() === id.toString())
+  const updatableCard = cards.find(card => card.id.toString() === id.toString())
 
   const updateNumbers = Object.keys(numbers).map( numberKey => {
     return { type: `${numberKey}`, number: numbers[numberKey] }
