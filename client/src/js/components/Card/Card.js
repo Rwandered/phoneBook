@@ -1,5 +1,6 @@
 import Info from "../Info/Info"
 import { getCardById } from "../../requests/request"
+import {notify} from "../../utils/Notify/notifyUtils";
 
 export default class Card {
   constructor(options) {
@@ -25,13 +26,16 @@ export default class Card {
 
 
     cardWrapper.addEventListener('click', async() => {
-      document.querySelector('.phoneBook__description').childNodes.forEach(e => e.remove())
-      //прежде чем создавать новое поле информации надо подгрузить данные о карточке, это нужно в случае, если добавили номер или
-      // его изменили, и нужно доабвить новые данные с сервера
-      // console.log(getCardById(this.id))
-      const cardOptions = await getCardById(this.id)
-      console.log('cardOptions: ', cardOptions)
-      new Info(cardOptions.data)
+      try {
+        document.querySelector('.phoneBook__description')
+          .childNodes.forEach(e => e.remove())
+        //прежде чем создавать новое поле информации надо подгрузить данные о карточке, это нужно в случае, если добавили номер или
+        // его изменили, и нужно доабвить новые данные с сервера
+        const cardOptions = await getCardById(this.id)
+        new Info(cardOptions.data)
+      }catch (error) {
+        notify.show(error)
+      }
     })
     return cardWrapper
   }
@@ -51,5 +55,4 @@ export default class Card {
         </p>
       </div>`
   }
-
 }

@@ -1,11 +1,14 @@
 import ListGroups from './components/ListGroups/ListGroups'
 import Description from './components/Description/Description'
 import { getGroups } from './requests/request'
+import Notify from "./components/Notify/Notify";
 import '../styles/scss/style.scss'
+import {notify} from "./utils/Notify/notifyUtils";
 
 
 const groups = async () => await getGroups()
 const description = new Description('phoneBook__row')
+
 
 const createListBlock = async() => {
   try {
@@ -32,6 +35,7 @@ const workWithBlock = element => {
     }
   })
 }
+
 
 // 1) страница загружается - создаются основное поле по центру
 // 2) проверяется размер окна и в зависимости от размера если это мобильная 

@@ -5,6 +5,7 @@ import {updateCard} from "../../../requests/request";
 import {startRender} from "../../../utils/Cards/cardsUtil";
 import Info from "../../Info/Info";
 import {removeDescription} from "../../../utils/DOM/domUtil";
+import {notify} from "../../../utils/Notify/notifyUtils";
 
 
 const editingModal = options => {
@@ -19,12 +20,14 @@ const editingModal = options => {
         console.log('Save editing')
         updateCard( _getFormData(options.id) )
           .then( async res => {
-            console.log('RES: ', res )
             await startRender(res)
             removeDescription()
             new Info(res.card)
+            notify.show('Phone number has been updated...')
           })
-          .catch(error => {})
+          .catch(error => {
+            notify.show(`Doesn't update this phone. Error: ${error}`)
+          })
       }
     },
       {

@@ -3,7 +3,50 @@ import FalseInput from "../FalseInput/FalseInput"
 import CreatingModal from "../Modal/CreatingModal/CreatingModal"
 import {renderCard} from "../../utils/Cards/cardsUtil";
 import Loader from "../Loader/Loader";
+import {notify} from "../../utils/Notify/notifyUtils";
 
+const toHtml = list => {
+  return `<div class="groups__row">
+  <!--Элемент для кнопочки добавить группу -->
+  <div class="groups__column groups__newGroup" data-new-group></div>
+  <!--Элемент для списка групп -->
+  <div class="groups__column groups__listGroup">
+    <ul data-ls>
+    <li data-all-contact='true' data-list-el data-group-type=system>
+     <p class=list-el-value>All Contacts</p>
+    </li>
+     ${toLi(list)}
+    <li data-false-input></li>
+    </ul>
+ </div>
+  
+  <!--Элемент для кнопочек настроек в этих настройках
+    можно будет добавлять людей в выделенную группу -->
+  <div class="groups__column groups__setting">
+    <div class="setting_column setting__img" data-setting></div>
+    <div class="setting_column edit__img" data-edit></div>
+    <div class="setting_column edit__stop__img" data-edit-stop></div>
+  </div>
+</div>`
+}
+
+const toLi = groupsList => {
+  const $groupsList = groupsList
+    .filter(group => group.name != 'All Contacts')
+    .map(group => `
+        <li data-list-el data-group-type=${group.type} data-removable="true" data-group-id=${group.id}>
+        <p class=list-el-value>${group.name}</p>
+         <div class="groups__controls_wrapper groups__controls_wrapper_hide">
+          <div class="groups__edit_controls">
+            <div class="rename_group "></div>
+            <div class="delete_group "></div>
+          </div>
+         </div>
+        </li>`)
+    .join(' ')
+
+  return $groupsList
+}
 
 export default class ListGroups {
   constructor({ groups, selector }) {
@@ -47,32 +90,33 @@ export default class ListGroups {
           await deleteGroup(+$group.dataset.groupId)
           $group.remove()
         } catch (e) {
-           console.log(e)
+           notify.show(e)
         }
 
       } else if (event.target.closest('[data-list-el]')) {
-          const listElem = event.target.closest('[data-list-el]')
+          try {
+            const listElem = event.target.closest('[data-list-el]')
 
-          // const allDataListEl = groupsContainer.querySelectorAll('.list-el-value')
-          const allDataListEl = groupsContainer.querySelectorAll('[data-list-el]')
-          allDataListEl.forEach(el => el.classList.remove('active_list_el'))
-          event.target.closest('[data-list-el]').classList.add('active_list_el')
+            // const allDataListEl = groupsContainer.querySelectorAll('.list-el-value')
+            const allDataListEl = groupsContainer.querySelectorAll('[data-list-el]')
+            allDataListEl.forEach(el => el.classList.remove('active_list_el'))
+            event.target.closest('[data-list-el]').classList.add('active_list_el')
 
-          document.querySelector('[data-gpname]').textContent = event.target.textContent
+            document.querySelector('[data-gpname]').textContent = event.target.textContent
 
-          const loader = new Loader('.cards')
-          const cards = !!listElem.dataset.allContact ? await getCards() : await getCardByGroup(listElem.dataset.groupId)
+            const loader = new Loader('.cards')
+            const cards = !!listElem.dataset.allContact ? await getCards() : await getCardByGroup(listElem.dataset.groupId)
 
-          cards && loader.hide()
-          renderCard(cards.data)
-          this.close()
+            cards && loader.hide()
+            renderCard(cards.data)
+            this.close()
+          } catch (error) {
+            notify.show(error)
+          }
       } else if (event.target.closest('[data-new-group]')) {
-
           new FalseInput({ selector: 'data-false-input', defaultText: 'New group' })
-
       } else if (event.target.closest('[data-setting]')) {
         CreatingModal()
-
       } else if (event.target.closest('[data-edit]')) {
           // получаем все элементы с корзиной, показывыаем их , скрываем кнопку с data edit и показываем кнопку data edit stop
           const [...removableItems] = document.querySelectorAll('[data-removable]')
@@ -89,8 +133,6 @@ export default class ListGroups {
         event.target.style.display = 'none'
         groupsContainer.querySelector('[data-edit-stop]').style.display = 'inline-block'
 
-        //=======================
-        // увеличить размер  радительского блока
         event.target.closest('.groups').classList.add('increaseWidth')
         event.target.closest('.groups').classList.remove('decreaseWidth')
 
@@ -135,49 +177,4 @@ export default class ListGroups {
       }, 100)
     }
   }
-}
-
-
-
-const toHtml = list => {
-  return `<div class="groups__row">
-  <!--Элемент для кнопочки добавить группу -->
-  <div class="groups__column groups__newGroup" data-new-group></div>
-  <!--Элемент для списка групп -->
-  <div class="groups__column groups__listGroup">
-    <ul data-ls>
-    <li data-all-contact='true' data-list-el data-group-type=system>
-     <p class=list-el-value>All Contacts</p>
-    </li>
-     ${toLi(list)}
-    <li data-false-input></li>
-    </ul>
- </div>
-  
-  <!--Элемент для кнопочек настроек в этих настройках
-    можно будет добавлять людей в выделенную группу -->
-  <div class="groups__column groups__setting">
-    <div class="setting_column setting__img" data-setting></div>
-    <div class="setting_column edit__img" data-edit></div>
-    <div class="setting_column edit__stop__img" data-edit-stop></div>
-  </div>
-</div>`
-}
-
-const toLi = groupsList => {
-  const $groupsList = groupsList
-    .filter(group => group.name != 'All Contacts')
-    .map(group => `
-        <li data-list-el data-group-type=${group.type} data-removable="true" data-group-id=${group.id}>
-        <p class=list-el-value>${group.name}</p>
-         <div class="groups__controls_wrapper groups__controls_wrapper_hide">
-          <div class="groups__edit_controls">
-            <div class="rename_group "></div>
-            <div class="delete_group "></div>
-          </div>
-         </div>
-        </li>`)
-    .join(' ')
-
-  return $groupsList
 }

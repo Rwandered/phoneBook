@@ -8,18 +8,12 @@ export default class Slider {
 
     this.sliderWrapperWidth = options.sliderWrapperWidth || 215
     this.sliderItemWidth = options.sliderItemWidth || 215
-
-    this.sliderWrapper
-
-    this.sliderItemPosition
     this.transformStep = this.sliderItemWidth / this.sliderWrapperWidth * 100 // величина шага (для трансформации)
     this.transformValue = 0 // значение трансформации .slider_wrapper
     this.positionLeftItem = 0
-
     this.indicatorItems = []
     this.maxIndexIndicator = this.sliderItems.length - 1
     this.indexIndicator = 0
-
     this.touchStartX = 0
 
     // let indicatorItems
@@ -29,9 +23,6 @@ export default class Slider {
     // let step = itemWidth / wrapperWidth * 100 // величина шага (для трансформации)
     // let positionLeftItem = 0 // позиция левого активного элемента
 
-
-    // console.log('Селектор: ', this.selector)
-    // console.log('Элементы слайдера: ', this.sliderItems)
   }
 
   create() {
@@ -42,9 +33,6 @@ export default class Slider {
     slider.classList.add('slider')
     this.sliderWrapper = document.createElement('div')
     this.sliderWrapper.classList.add('slider__wrapper')
-
-    // console.log('Slider item from class: ', this.sliderItems)
-
     this.sliderItems.forEach((item, index) => {
 
       const sliderItem = document.createElement('div')

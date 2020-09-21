@@ -3,8 +3,7 @@ import {setCard} from "../../../requests/request"
 import getSelect from "../../Select/Select";
 import {_getFormData, formBody} from "../../../utils/Form/form";
 import {startRender} from "../../../utils/Cards/cardsUtil";
-
-
+import {notify} from "../../../utils/Notify/notifyUtils";
 
 
 export default function CreatingModal() {
@@ -19,8 +18,9 @@ export default function CreatingModal() {
         setCard(_getFormData())
           .then(async res => {
             await startRender(res)
-          // //   тут уведомление, что все ок
-          }).catch( error => {//    тут ошибка, что что-то не так
+            notify.show('Phone number has been created...')
+          }).catch( error => {
+            notify.show(error)
         })
       }
     },

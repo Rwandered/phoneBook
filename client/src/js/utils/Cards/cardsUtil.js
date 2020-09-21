@@ -1,5 +1,6 @@
 import {deleteCardById, getCardByGroup, getCards, getGroups, getGroupsValueById} from "../../requests/request";
 import Card from "../../components/Card/Card";
+import {notify} from "../Notify/notifyUtils";
 
 export const renderCard = cardsArray => {
   const cardWrapper = document.querySelector('.cards')
@@ -24,27 +25,26 @@ const getCurrentGroupId = async (groupName) => {
 }
 
 export const startRender = async (param) => {
+  try {
+    const activeGroup = document.querySelector('.active_list_el')
+    if (activeGroup) {
+      let cards
+      const { groups } = await getGroupsValueById({ids: param.card.groups} )
 
-  const activeGroup = document.querySelector('.active_list_el')
-  if (activeGroup) {
-    let cards
-    const { groups } = await getGroupsValueById({ids: param.card.groups} )
+      if (activeGroup.dataset.allContact) {
+        cards = await getCards()
+        return renderCard(cards.data)
 
-    if (activeGroup.dataset.allContact) {
-      cards = await getCards()
-      return renderCard(cards.data)
-
-    } else {
-      // const {isInclude, id} = checkGroupsValue(groups, activeGroup.textContent.trim())
-      const {id} = await getCurrentGroupId(activeGroup.textContent.trim())
-      // if(isInclude) {
+      } else {
+        const {id} = await getCurrentGroupId(activeGroup.textContent.trim())
         cards = await getCardByGroup(id)
         return renderCard(cards.data)
-      // }
-      // return null
+      }
     }
+  } catch (error) {
+    notify.show(error)
   }
-  //   тут уведомление, что все ок
+
 }
 
 export const deleteCard = (id) => {

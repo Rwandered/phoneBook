@@ -4,8 +4,6 @@ import toUpperFistLetter from "../../utils/Text/text"
 export default class FalseFieldInfo {
   constructor(selector) {
     this.selector = selector || 'false__field__wrapper'
-    this.falseFieldInfo
-    this.falseFieldInfoWrapper
     this.create()
   }
 
@@ -37,7 +35,6 @@ export default class FalseFieldInfo {
   send() {
 
     const [typeNumber, number] = [...this.falseFieldInfo.elements]
-    // if (!typeNumber.value === '' && !number.value === '') {
     const userInfoField = document.querySelector(`.description__userinfo`)
     const cardId = userInfoField.closest('[data-id]').dataset.id
     addPhone({
@@ -55,7 +52,6 @@ export default class FalseFieldInfo {
     </div>`)
     userInfoField.scrollTop = userInfoField.scrollHeight
     this.destroy()
-    // }
   }
 }
 

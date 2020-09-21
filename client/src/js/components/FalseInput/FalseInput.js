@@ -1,4 +1,17 @@
 import { setGroup } from "../../requests/request"
+import {notify} from "../../utils/Notify/notifyUtils";
+
+const toNode = txt => {
+  const falseInput = document.createElement('input')
+  falseInput.classList.add('inp_new_group')
+  falseInput.type = 'text'
+  falseInput.value = txt
+  falseInput.maxLength = 15
+  falseInput.placeholder = 'Max: 15 symbols'
+
+  return falseInput
+}
+
 
 export default class FalseInput {
   constructor(options) {
@@ -8,7 +21,6 @@ export default class FalseInput {
     this.inputType = options.inputType || 'new'
     this.create()
   }
-
 
   create() {
 
@@ -30,8 +42,8 @@ export default class FalseInput {
   }
 
   send() {
-
     const falseInputValue = this.falseInput.value
+
     if (falseInputValue.length === 0) {
 
       if(this.inputType === 'update') {
@@ -39,10 +51,8 @@ export default class FalseInput {
       }
       return this.destroy()
     }
-    // а тут метод по созданию новой li и запрос на сервер для добавления там новой группы
 
     const $group = setGroup({ reqType: this.inputType, value: falseInputValue, groupId: this.groupId })
-    // console.log($group)
     $group.then(result => {
 
       if (this.inputType === 'new') {
@@ -68,7 +78,7 @@ export default class FalseInput {
       this.destroy()
     })
         .catch(error => {
-          console.log('Error: ', error)
+          notify.show(error)
         })
 
   }
@@ -76,17 +86,4 @@ export default class FalseInput {
   update() {
 
   }
-
-
-}
-
-const toNode = txt => {
-  const falseInput = document.createElement('input')
-  falseInput.classList.add('inp_new_group')
-  falseInput.type = 'text'
-  falseInput.value = txt
-  falseInput.maxLength = 15
-  falseInput.placeholder = 'Max: 15 symbols'
-
-  return falseInput
 }

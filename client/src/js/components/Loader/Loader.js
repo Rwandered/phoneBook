@@ -10,12 +10,15 @@ export default class Loader {
     this.create()
   }
   create() {
-    this.loader = document.createElement('div')
-    this.loader.classList.add('loader')
-    this.loader.insertAdjacentHTML('afterbegin', toHTML())
-    this.targetNode.insertAdjacentElement('afterbegin', this.loader)
+    const isLoader = this.targetNode.querySelector('.loader')
+    if(!isLoader) {
+      this.loader = document.createElement('div')
+      this.loader.classList.add('loader')
+      this.loader.insertAdjacentHTML('afterbegin', toHTML())
+      this.targetNode.insertAdjacentElement('afterbegin', this.loader)
 
-    this.show()
+      this.show()
+    }
   }
 
   show() {
