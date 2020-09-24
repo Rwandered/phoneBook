@@ -12,9 +12,7 @@ export const setCard = async options => {
 }
 
 export const updateCard = async options => {
-  console.log('updateCard data: ', options)
   try {
-
     const response = await fetch(`http${ADDRESS}${PORT}/card`, {
       method: 'PATCH',
       body: options
@@ -128,5 +126,6 @@ export const addPhone = async options => {
       },
       body: JSON.stringify(options)
     })
+    return await response.json()
   } catch (e) {}
 }

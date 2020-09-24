@@ -17,7 +17,7 @@ const editingModal = options => {
       text: 'Ok',
       type: 'ok',
       handler() {
-        console.log('Save editing')
+        console.log('HANDLER')
         updateCard( _getFormData(options.id) )
           .then( async res => {
             await startRender(res)
@@ -28,6 +28,7 @@ const editingModal = options => {
           .catch(error => {
             notify.show(`Doesn't update this phone. Error: ${error}`)
           })
+        editModal.close()
       }
     },
       {
@@ -41,7 +42,6 @@ const editingModal = options => {
     entry: 'phoneBook',
     body: formBody(options)
   } )
-  console.log('options: ', options)
   getSelect(options.groups)
 }
 

@@ -50,7 +50,7 @@ export default class Card {
         <div class="card__col card__number">
         <p>
           <strong>${
-            this.numbers.find(number => number.type === 'work').number
+            this.numbers.find(number => number.type === 'mobile').number
           }</strong>
         </p>
       </div>`

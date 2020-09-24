@@ -9,6 +9,7 @@ const _getModalLayer = () => {
 const _getModalWrapper = () => {
   const modalWrapper = document.createElement('div')
   modalWrapper.classList.add('modal__window')
+  modalWrapper.tabIndex = 0
   return modalWrapper
 }
 
@@ -38,6 +39,7 @@ const _getModalFooter = buttons => {
   return $modalFooter
 }
 
+
 export default class Modal {
   constructor(options) {
     this.title = options.title
@@ -64,6 +66,7 @@ export default class Modal {
     modalRow.insertAdjacentElement('beforeend', this.body)
     modalRow.insertAdjacentElement('beforeend', modalFooter)
     modalWrapper.insertAdjacentElement('beforeend', modalRow)
+    modalWrapper.focus()
     modalLayer.insertAdjacentElement('beforeend', modalWrapper)
     document.querySelector(`.${this.entry || 'phoneBook'}`)
       .insertAdjacentElement('beforeend', modalLayer)
@@ -78,9 +81,19 @@ export default class Modal {
       }
     })
 
+    const submitBtn = this.buttons.find( button => button.type === 'submit')
+    this.sumbitHandler = submitBtn ? submitBtn.handler : null
+    this.sumbitHandler && document.body.addEventListener('keypress', this.submit.bind(this))
+  }
+
+  submit() {
+    console.log('submit')
+    event.code === 'Enter' &&  this.sumbitHandler()
+    document.body.removeEventListener('keypress', this.submit)
   }
 
   close() {
+    // document.body.removeEventListener('keypress', this.submit)
     this.modal.remove()
   }
 

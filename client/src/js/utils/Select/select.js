@@ -2,7 +2,6 @@ import './select.scss'
 
 const getHtml = (placeholder, data = [], selectedIds, multiple = false, fieldValue, defaultText) => {
   let text = placeholder || 'Select something from list'
-  console.log('selectedIds: ', selectedIds)
   const listItem = data.map( (elem) => {
     let selCls = ''
     let multi = ''
@@ -58,13 +57,17 @@ export class Select {
     this.selectorDom.onselectstart = () => false
 
     if(this.multiple) {
-      document.body.addEventListener('keydown', this.addHandleMultiple.bind(this))
-      document.body.addEventListener('keyup', this.removeHandleMultiple.bind(this))
+      this.addMultipleHandler = this.addHandleMultiple.bind(this)
+      this.removeMultipleHandler = this.removeHandleMultiple.bind(this)
+      document.body.addEventListener('keydown', this.addMultipleHandler)
+      document.body.addEventListener('keyup', this.removeMultipleHandler)
     }
 
     this.arrowIcon = this.selectorDom.querySelector('[data-type="arrow"]')
     this.value = this.selectorDom.querySelector('[data-type="text"]')
     this.input = this.selectorDom.querySelector('[data-type="input"]')
+
+    console.log('this.addMultipleHandler: ', this.addMultipleHandler)
   }
 
   addHandlerClick (event) {
@@ -160,10 +163,14 @@ export class Select {
     this.arrowIcon.classList.add('fa-chevron-down')
     this.arrowIcon.classList.remove('fa-chevron-up')
     this.multiSelect = false
+    this.destroy()
   }
 
   destroy() {
     this.removeSetUp()
-    this.selectorDom.remove()
+    // this.selectorDom.remove()
+    console.log('this.addMultipleHandler: ', this.addMultipleHandler)
+    document.body.removeEventListener('keydown', this.addMultipleHandler, true)
+    document.body.removeEventListener('keyup', this.removeMultipleHandler, true)
   }
 }

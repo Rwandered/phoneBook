@@ -1,5 +1,6 @@
 import { addPhone } from "../../requests/request"
 import toUpperFistLetter from "../../utils/Text/text"
+import {notify} from "../../utils/Notify/notifyUtils";
 
 export default class FalseFieldInfo {
   constructor(selector) {
@@ -14,13 +15,15 @@ export default class FalseFieldInfo {
     this.falseFieldInfoWrapper.insertAdjacentElement('afterbegin', this.falseFieldInfo)
     this.falseFieldInfoWrapper.dataset.active = ''
     this.falseFieldInfo.typeNumber.focus()
-    this.falseFieldInfo.addEventListener('click', () => {
-      if (event.target.dataset.fieldOk) {
+
+    this.falseFieldInfo.addEventListener('submit', (event) => {
+      event.preventDefault()
         this.send()
-      } else if (event.target.dataset.fieldCancel) {
-        this.destroy()
-      }
     })
+
+    this.falseFieldInfo
+      .querySelector('.false_field_cancel_btn')
+      .addEventListener( 'click', () => this.destroy())
   }
 
   remove() {
@@ -33,17 +36,18 @@ export default class FalseFieldInfo {
   }
 
   send() {
-
     const [typeNumber, number] = [...this.falseFieldInfo.elements]
     const userInfoField = document.querySelector(`.description__userinfo`)
     const cardId = userInfoField.closest('[data-id]').dataset.id
     addPhone({
       id: cardId,
       data: {
-        type: typeNumber.value,
-        number: number.value
+        type: typeNumber.value.trim(),
+        number: number.value.trim()
       }
     })
+      .then( () => notify.show('Phone has been added...'))
+      .catch( error => notify.show(error))
 
     userInfoField.insertAdjacentHTML('beforeend',
       ` <div class="number__info">
@@ -60,10 +64,10 @@ const toNode = () => {
 
   falseInput.insertAdjacentHTML('beforeend',
     `
-         <input class="false_field" type="text" value="" name="typeNumber" placeholder="Type of number">
-         <input class="false_field" type="tel" value="" name="number" placeholder="Number">
-         <div class="false_field_ok_btn" data-field-ok='true'></div>
-         <div class="false_field_cancel_btn" data-field-cancel='true'></div>
+         <input class="false_field" type="text" value="" name="typeNumber" placeholder="Type of number" required>
+         <input class="false_field" type="tel" value="" name="number" placeholder="Number" required>
+         <button type="submit" class="false_field_ok_btn" data-field-ok='true'></button>
+         <button class="false_field_cancel_btn" data-field-cancel='true'></button>
          `)
 
   return falseInput

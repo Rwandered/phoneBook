@@ -44,7 +44,6 @@ export default class Slider {
       this.sliderWrapper.insertAdjacentElement('beforeend', sliderItem)
     })
 
-    // console.log('Все элементы в items: ', this.items)
 
     this.sliderItemPosition = {
       //получим элемент с минимальным значением ключа position
@@ -76,7 +75,6 @@ export default class Slider {
 
 
     sliderLayer.addEventListener('click', () => {
-      // console.log(this)
       if (event.target.classList.contains('slider__control')) {
         event.preventDefault()
         const direction = event.target.classList.contains('slider__control_right') ? 'right' : 'left'

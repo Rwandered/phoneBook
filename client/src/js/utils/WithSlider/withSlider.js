@@ -7,7 +7,12 @@ const getPhoneSlide = (data) => {
     return `
       <div class="phone__column ">
         <label for="${item[0]}">${toUpperFistLetter(item[0])}</label>
-        <input class="phone__txt_field" value="${item[1]}" type="text" name="${item[0]}">
+        <input 
+          class="phone__txt_field"
+          value="${item[1]}"
+          type="tel"
+          name="${item[0]}"
+        >
       </div>
     `
   }).join('')
@@ -15,7 +20,6 @@ const getPhoneSlide = (data) => {
 
 const getMainSlide = (params) => {
   const mainKeys = { firstName: '', lastName: '', group: '', info: '', }
-
   if(params) {
     for(let mainKey in mainKeys) {
       for(let key in params) {

@@ -15,13 +15,19 @@ export default function CreatingModal() {
       text: 'Ok',
       type: 'ok',
       handler() {
-        setCard(_getFormData())
+        const dataToSendeed = _getFormData()
+        console.log('dataToSendeed: ', [...dataToSendeed.entries()])
+        dataToSendeed.forEach( (t) => {
+          console.log(t)
+        })
+        setCard(dataToSendeed)
           .then(async res => {
             await startRender(res)
             notify.show('Phone number has been created...')
           }).catch( error => {
             notify.show(error)
         })
+        modalWindow.close()
       }
     },
       {

@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const multer = require('multer') //для анализа multipart / form data
-const path = require('path')
 const $ = require('../initData.js')
 
 const router = new Router
@@ -24,6 +23,12 @@ const upload = multer({
 let cards = $.cards
 const groups = $.groups
 
+const getGroupId = groupName => groupName.map( group => groups.find( $group => $group.name.trim() === group.trim()).id)
+const getCardMaxId = () => (cards.length
+  ? cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
+  : 0)
+
+
 router.post('/card', (req, res) => {
   const $card = cards.find(card => card.id === req.body.id)
   res.json({ data: $card })
@@ -39,16 +44,17 @@ router.get('/', (req, res) => {
 })
 
 
-//добавляет новый номер в карточку позже нужно будет сделать универсальный метод для изменения карточки
+//добавляет новый номер в карточку
 router.put('/', (req, res) => {
   const { id, data } = req.body
   const card = cards.find(card => card.id.toString() === id.toString())
   card.numbers.push({
     type: data.type,
-    number: data.number
+    number: data.number,
+    isRequired: false,
   })
 
-  res.json({ message: 'Ok' })
+  res.json({ card: card, message: 'Ok' })
 })
 
 
@@ -94,9 +100,17 @@ router.patch('/', upload.single('logo'), (req, res) => {
   const groupIdArray = getGroupId(groups.split(','))
   const updatableCard = cards.find(card => card.id.toString() === id.toString())
 
-  const updateNumbers = Object.keys(numbers).map( numberKey => {
-    return { type: `${numberKey}`, number: numbers[numberKey] }
-  })
+  const updateNumbers = updatableCard.numbers
+    .reduce( (acc, number) => {
+      if(number.type in numbers) {
+        acc.push( {type: `${number.type}`, number: numbers[number.type], isRequired: number.isRequired } )
+        return acc
+      } else {
+        return acc
+      }
+    }, [])
+    .filter( newNumber => newNumber.isRequired || newNumber.number && newNumber)
+
 
   const updatedCard  = {
     firstName,
@@ -123,15 +137,5 @@ router.delete('/', (req, res) => {
   cards = cards.filter( card => card.id !== id)
   res.json({ message: 'Card has been deleted...', card: deletedCard })
 })
-
-
-
-const getGroupId = groupName => groupName.map( group => groups.find( $group => $group.name.trim() === group.trim()).id)
-const getCardMaxId = () => (cards.length
-    ? cards.reduce( (ac, card) => ac.id > card.id ? ac : card ).id
-    : 0)
-
-
-
 
 module.exports = router

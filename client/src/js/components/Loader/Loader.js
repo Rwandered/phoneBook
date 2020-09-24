@@ -6,7 +6,6 @@ export default class Loader {
   constructor(selector) {
 
     this.targetNode = document.querySelector(selector)
-    console.log('this.targetNode: ', this.targetNode)
     this.create()
   }
   create() {

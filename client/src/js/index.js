@@ -1,9 +1,7 @@
 import ListGroups from './components/ListGroups/ListGroups'
 import Description from './components/Description/Description'
 import { getGroups } from './requests/request'
-import Notify from "./components/Notify/Notify";
 import '../styles/scss/style.scss'
-import {notify} from "./utils/Notify/notifyUtils";
 
 
 const groups = async () => await getGroups()
@@ -22,7 +20,7 @@ const createListBlock = async() => {
 createListBlock()
 
 const workWithBlock = element => {
-  document.querySelector('.body').addEventListener('click', () => {
+  document.querySelector('.body').addEventListener('click', (event) => {
     if (event.target.closest('[data-menu]')) {
       description.close()
       element.show()
