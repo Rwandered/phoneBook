@@ -13,14 +13,9 @@ export default function CreatingModal() {
     closable: true,
     buttons: [{
       text: 'Ok',
-      type: 'ok',
+      type: 'submit',
       handler() {
-        const dataToSendeed = _getFormData()
-        console.log('dataToSendeed: ', [...dataToSendeed.entries()])
-        dataToSendeed.forEach( (t) => {
-          console.log(t)
-        })
-        setCard(dataToSendeed)
+        setCard(_getFormData())
           .then(async res => {
             await startRender(res)
             notify.show('Phone number has been created...')

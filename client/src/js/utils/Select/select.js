@@ -56,18 +56,17 @@ export class Select {
     this.selectorDom.addEventListener('click', this.addHandlerClick.bind(this))
     this.selectorDom.onselectstart = () => false
 
-    if(this.multiple) {
-      this.addMultipleHandler = this.addHandleMultiple.bind(this)
-      this.removeMultipleHandler = this.removeHandleMultiple.bind(this)
-      document.body.addEventListener('keydown', this.addMultipleHandler)
-      document.body.addEventListener('keyup', this.removeMultipleHandler)
-    }
+    // if(this.multiple) {
+    //   this.addMultipleHandler = this.addHandleMultiple.bind(this)
+    //   this.removeMultipleHandler = this.removeHandleMultiple.bind(this)
+    //   document.body.addEventListener('keydown', this.addMultipleHandler, )
+    //   document.body.addEventListener('keyup', this.removeMultipleHandler, )
+    // }
 
     this.arrowIcon = this.selectorDom.querySelector('[data-type="arrow"]')
     this.value = this.selectorDom.querySelector('[data-type="text"]')
     this.input = this.selectorDom.querySelector('[data-type="input"]')
 
-    console.log('this.addMultipleHandler: ', this.addMultipleHandler)
   }
 
   addHandlerClick (event) {
@@ -106,13 +105,11 @@ export class Select {
 
   get current() {
 
-    const res = this.options.data.reduce( (acc, elem) => {
+    return this.options.data.reduce( (acc, elem) => {
       return this.selectedIds.some( id => id.toString() === elem.id.toString())
         ? [...acc, elem]
         : acc
     }, [])
-
-    return res
   }
 
   select (id) {
@@ -124,8 +121,6 @@ export class Select {
 
     const value = this.current.map(e =>  e[this.fieldValue ] ).join(', ')
     const selectedItem = this.selectorDom.querySelector(`[data-id="${id}"]`)
-
-
 
     if(!this.multiSelect) {
       this.selectorDom.querySelectorAll(`[data-type="item"]`).forEach(elem => elem.classList.remove('selected'))
@@ -156,6 +151,13 @@ export class Select {
     this.selectorDom.classList.add('open')
     this.arrowIcon.classList.remove('fa-chevron-down')
     this.arrowIcon.classList.add('fa-chevron-up')
+
+    if(this.multiple) {
+      this.addMultipleHandler = this.addHandleMultiple.bind(this)
+      this.removeMultipleHandler = this.removeHandleMultiple.bind(this)
+      document.body.addEventListener('keydown', this.addMultipleHandler, )
+      document.body.addEventListener('keyup', this.removeMultipleHandler, )
+    }
   }
 
   close() {
@@ -168,9 +170,7 @@ export class Select {
 
   destroy() {
     this.removeSetUp()
-    // this.selectorDom.remove()
-    console.log('this.addMultipleHandler: ', this.addMultipleHandler)
-    document.body.removeEventListener('keydown', this.addMultipleHandler, true)
-    document.body.removeEventListener('keyup', this.removeMultipleHandler, true)
+    document.body.removeEventListener('keydown', this.addMultipleHandler)
+    document.body.removeEventListener('keyup', this.removeMultipleHandler)
   }
 }

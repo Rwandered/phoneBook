@@ -20,8 +20,7 @@ const checkGroupsValue = (where, what) => {
 const getCurrentGroupId = async (groupName) => {
 
   const {data} = await getGroups()
-  const currentGroup = data.find( group => group.name === groupName)
-  return currentGroup
+  return  data.find( group => group.name === groupName)
 }
 
 export const startRender = async (param) => {

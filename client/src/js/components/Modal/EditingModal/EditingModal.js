@@ -15,9 +15,8 @@ const editingModal = options => {
     closable: true,
     buttons: [{
       text: 'Ok',
-      type: 'ok',
+      type: 'submit',
       handler() {
-        console.log('HANDLER')
         updateCard( _getFormData(options.id) )
           .then( async res => {
             await startRender(res)

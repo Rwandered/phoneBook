@@ -83,17 +83,16 @@ export default class Modal {
 
     const submitBtn = this.buttons.find( button => button.type === 'submit')
     this.sumbitHandler = submitBtn ? submitBtn.handler : null
-    this.sumbitHandler && document.body.addEventListener('keypress', this.submit.bind(this))
+    this.selHandle = this.submit.bind(this)
+    this.sumbitHandler && document.body.addEventListener('keypress', this.selHandle)
   }
 
   submit() {
-    console.log('submit')
     event.code === 'Enter' &&  this.sumbitHandler()
-    document.body.removeEventListener('keypress', this.submit)
+    document.body.removeEventListener('keypress', this.selHandle)
   }
 
   close() {
-    // document.body.removeEventListener('keypress', this.submit)
     this.modal.remove()
   }
 
